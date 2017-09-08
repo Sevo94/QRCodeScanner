@@ -9,12 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import com.example.sevak1994.qrcodescanner.R;
 import com.google.zxing.Result;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
