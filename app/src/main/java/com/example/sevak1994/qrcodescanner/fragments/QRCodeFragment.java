@@ -1,15 +1,13 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
 import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.example.sevak1994.qrcodescanner.R;
@@ -17,8 +15,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
-
-import static android.content.Context.WINDOW_SERVICE;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 /**
  * Created by Admin on 9/7/2017.
@@ -44,11 +41,14 @@ public class QRCodeFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        final Handler handler = new Handler();
+
         new Thread(new Runnable() {
             @Override
             public void run() {
-                final Bitmap bitmap = TextToImageEncode("My name is Sevag");
-                getActivity().runOnUiThread(new Runnable() {
+                final Bitmap bitmap = TextToImageEncode("Hi my name is Sevag");
+
+                handler.post(new Runnable() {
                     @Override
                     public void run() {
                         qrCodeIV.setImageBitmap(bitmap);
@@ -74,23 +74,7 @@ public class QRCodeFragment extends Fragment {
             return null;
         }
 
-        int bitMatrixWidth = bitMatrix.getWidth();
-
-        int bitMatrixHeight = bitMatrix.getHeight();
-
-        int[] pixels = new int[bitMatrixWidth * bitMatrixHeight];
-
-        for (int y = 0; y < bitMatrixHeight; y++) {
-            int offset = y * bitMatrixWidth;
-
-            for (int x = 0; x < bitMatrixWidth; x++) {
-                pixels[offset + x] = bitMatrix.get(x, y) ?
-                        getResources().getColor(R.color.black) : getResources().getColor(R.color.white);
-            }
-        }
-        Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444);
-
-        bitmap.setPixels(pixels, 0, bitMatrixWidth, 0, 0, bitMatrixWidth, bitMatrixHeight);
-        return bitmap;
+        BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+        return barcodeEncoder.createBitmap(bitMatrix);
     }
 }
