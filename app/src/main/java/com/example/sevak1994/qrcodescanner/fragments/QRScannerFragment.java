@@ -11,16 +11,21 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.sevak1994.qrcodescanner.R;
+import com.google.zxing.Result;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
  * Created by Admin on 9/7/2017.
  */
 
-public class QRScannerFragment extends Fragment {
+public class QRScannerFragment extends Fragment implements ZXingScannerView.ResultHandler {
 
+    private View fragmentRootView;
     private FragmentActivity activity;
+    private ZXingScannerView scannerView;
 
     public QRScannerFragment() {
     }
@@ -28,7 +33,9 @@ public class QRScannerFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_contacts, container, false);
+        fragmentRootView = inflater.inflate(R.layout.fragment_qrscanner, container, false);
+
+        return fragmentRootView;
     }
 
     @Override
@@ -36,7 +43,22 @@ public class QRScannerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         activity = getActivity();
-        initQRScanner();
+        scannerView = fragmentRootView.findViewById(R.id.scanner_view);
+        scannerView.setResultHandler(this);
+
+        //initQRScanner();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        scannerView.stopCamera();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        scannerView.startCamera(0);
     }
 
     public void initQRScanner() {
@@ -61,6 +83,14 @@ public class QRScannerFragment extends Fragment {
 
         } else {
             super.onActivityResult(requestCode, resultCode, data);
+        }
+    }
+
+    @Override
+    public void handleResult(Result result) {
+        if (result != null) {
+            Toast.makeText(activity, "Scanned " + result.getText(), Toast.LENGTH_SHORT).show();
+            scannerView.resumeCameraPreview(this);
         }
     }
 }
