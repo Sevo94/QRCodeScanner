@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.example.sevak1994.qrcodescanner.MainActivity;
 import com.example.sevak1994.qrcodescanner.R;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -23,6 +25,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 public class QRCodeFragment extends Fragment {
 
     private ImageView qrCodeIV;
+    private MainActivity activity;
 
     public QRCodeFragment() {
     }
@@ -39,6 +42,9 @@ public class QRCodeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        activity = (MainActivity) getActivity();
+        activity.setToolbarTitle(getResources().getString(R.string.title_qr_code));
 
         final Handler handler = new Handler();
 
@@ -64,7 +70,7 @@ public class QRCodeFragment extends Fragment {
             bitMatrix = new MultiFormatWriter().encode(
                     textValue,
                     BarcodeFormat.QR_CODE,
-                    500, 500, null
+                    750, 750, null
             );
 
         } catch (IllegalArgumentException Illegalargumentexception) {

@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private FragmentManager fragmentManager;
     private FragmentActivity fragmentActivity;
+    private Toolbar toolbar;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -63,10 +65,18 @@ public class MainActivity extends AppCompatActivity {
         fragmentActivity = this;
         fragmentManager = FragmentManager.getInstance();
         mTextMessage = (TextView) findViewById(R.id.message);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         FragmentManager.getInstance().startHomeFragment(this);
+    }
+
+    public void setToolbarTitle(String title) {
+        toolbar.setTitle(title);
+        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
     }
 }

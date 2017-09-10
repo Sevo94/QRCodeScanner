@@ -4,15 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import com.example.sevak1994.qrcodescanner.MainActivity;
 import com.example.sevak1994.qrcodescanner.R;
 import com.google.zxing.Result;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
@@ -22,7 +24,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class QRScannerFragment extends Fragment implements ZXingScannerView.ResultHandler {
 
     private View fragmentRootView;
-    private FragmentActivity activity;
+    private MainActivity activity;
     private ZXingScannerView scannerView;
 
     public QRScannerFragment() {
@@ -40,7 +42,9 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        activity = getActivity();
+        activity = (MainActivity) getActivity();
+        activity.setToolbarTitle(getResources().getString(R.string.title_qr_scanner));
+
         scannerView = fragmentRootView.findViewById(R.id.scanner_view);
         scannerView.setResultHandler(this);
 

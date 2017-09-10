@@ -4,31 +4,31 @@
     <item
         android:id="@+id/navigation_home"
         android:enabled="true"
-        android:icon="@drawable/ic_home_black_24dp"
+        android:icon="@drawable/home"
         android:title="@string/title_home" />
 
     <item
         android:id="@+id/navigation_contacts"
         android:enabled="true"
-        android:icon="@drawable/ic_dashboard_black_24dp"
+        android:icon="@drawable/contact"
         android:title="@string/title_contacts" />
 
     <item
         android:id="@+id/navigation_qr_scanner"
         android:enabled="true"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/logo_btn"
         android:title="@string/title_qr_scanner" />
 
     <item
         android:id="@+id/navigation_qr_code"
         android:enabled="true"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/qr_code"
         android:title="@string/title_qr_code" />
 
     <item
         android:id="@+id/navigation_settings"
         android:enabled="true"
-        android:icon="@drawable/ic_notifications_black_24dp"
+        android:icon="@drawable/settings"
         android:title="@string/title_settings" />
 
 </menu>
