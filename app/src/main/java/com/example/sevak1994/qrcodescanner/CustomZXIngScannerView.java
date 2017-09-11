@@ -11,7 +11,6 @@ import android.view.View;
 
 import me.dm7.barcodescanner.core.DisplayUtils;
 import me.dm7.barcodescanner.core.IViewFinder;
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
  * Created by Admin on 9/9/2017.

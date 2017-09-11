@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
+
         fragmentActivity = this;
         fragmentManager = FragmentManager.getInstance();
         mTextMessage = (TextView) findViewById(R.id.message);
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.setItemIconTintList(null);
 
         FragmentManager.getInstance().startHomeFragment(this);
     }
