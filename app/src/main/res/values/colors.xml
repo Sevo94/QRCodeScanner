@@ -6,4 +6,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="black">#000000</color>
     <color name="nav_view_icon_color">#BEBEBE</color>
+    <color name="no_color">#7f0d004d</color>
 </resources>
