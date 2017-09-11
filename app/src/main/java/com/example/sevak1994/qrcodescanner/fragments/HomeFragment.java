@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.example.sevak1994.qrcodescanner.MainActivity;
 import com.example.sevak1994.qrcodescanner.R;
@@ -18,6 +19,10 @@ public class HomeFragment extends Fragment {
 
     private View fragmentRootView;
     private MainActivity activity;
+
+    private LinearLayout mobileLayout;
+    private LinearLayout emailLayout;
+    private LinearLayout addressLayout;
 
     public HomeFragment() {
     }
@@ -36,5 +41,16 @@ public class HomeFragment extends Fragment {
         activity = (MainActivity) getActivity();
 
         activity.setToolbarTitle(getResources().getString(R.string.title_home));
+        initFragmentUi();
+    }
+
+    private void initFragmentUi() {
+        mobileLayout = fragmentRootView.findViewById(R.id.mobile);
+        emailLayout = fragmentRootView.findViewById(R.id.email);
+        addressLayout = fragmentRootView.findViewById(R.id.address);
+
+        mobileLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.call);
+        emailLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.email);
+        addressLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.location);
     }
 }
