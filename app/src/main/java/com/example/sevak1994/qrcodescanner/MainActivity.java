@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.navigation_settings:
                     if (!item.isChecked()) {
                         mTextMessage.setText(R.string.title_settings);
-                        fragmentManager.startSettigsFragment(fragmentActivity);
+                        fragmentManager.startSettingsFragment(fragmentActivity);
                     }
                     return true;
             }

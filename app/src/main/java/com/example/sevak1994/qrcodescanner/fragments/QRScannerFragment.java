@@ -46,6 +46,7 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
         activity.setToolbarTitle(getResources().getString(R.string.title_qr_scanner));
 
         scannerView = fragmentRootView.findViewById(R.id.scanner_view);
+
         scannerView.setResultHandler(this);
 
         //initQRScanner();

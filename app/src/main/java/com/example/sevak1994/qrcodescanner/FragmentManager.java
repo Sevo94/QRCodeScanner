@@ -55,7 +55,7 @@ public class FragmentManager {
 
     }
 
-    public void startSettigsFragment(FragmentActivity fragmentActivity) {
+    public void startSettingsFragment(FragmentActivity fragmentActivity) {
         SettingsFragment settingsFragment = new SettingsFragment();
         startFragmentTransaction(fragmentActivity, settingsFragment);
 
