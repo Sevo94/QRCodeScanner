@@ -1,20 +1,21 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.sevak1994.qrcodescanner.CustomZXIngScannerView;
 import com.example.sevak1994.qrcodescanner.MainActivity;
 import com.example.sevak1994.qrcodescanner.R;
 import com.google.zxing.Result;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 
+import me.dm7.barcodescanner.core.IViewFinder;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
@@ -26,6 +27,8 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
     private View fragmentRootView;
     private MainActivity activity;
     private ZXingScannerView scannerView;
+    private LinearLayout scannerViewLayout;
+    private CustomZXIngScannerView customZXingScannerView;
 
     public QRScannerFragment() {
     }
@@ -34,6 +37,7 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         fragmentRootView = inflater.inflate(R.layout.fragment_qrscanner, container, false);
+        scannerViewLayout = fragmentRootView.findViewById(R.id.scanner_view_layout);
 
         return fragmentRootView;
     }
@@ -45,11 +49,18 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
         activity = (MainActivity) getActivity();
         activity.setToolbarTitle(getResources().getString(R.string.title_qr_scanner));
 
-        scannerView = fragmentRootView.findViewById(R.id.scanner_view);
+        customZXingScannerView = new CustomZXIngScannerView(getContext());
+        customZXingScannerView.setBorderColor(getResources().getColor(R.color.white));
 
+        scannerView = new ZXingScannerView(getContext()) {
+            @Override
+            protected IViewFinder createViewFinderView(Context context) {
+                return customZXingScannerView;
+            }
+        };
+
+        scannerViewLayout.addView(scannerView);
         scannerView.setResultHandler(this);
-
-        //initQRScanner();
     }
 
     @Override
@@ -62,31 +73,6 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
     public void onResume() {
         super.onResume();
         scannerView.startCamera(0);
-    }
-
-    public void initQRScanner() {
-        IntentIntegrator intentIntegrator = new IntentIntegrator(activity);
-        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        intentIntegrator.setPrompt("Scan");
-        intentIntegrator.setCameraId(0);
-        intentIntegrator.setBeepEnabled(false);
-        intentIntegrator.setBarcodeImageEnabled(false);
-        IntentIntegrator.forSupportFragment(this).initiateScan();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if (result != null) {
-            if (result.getContents() == null) {
-                Toast.makeText(activity, "Cancelled", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(activity, "Scanned " + result.getContents(), Toast.LENGTH_SHORT).show();
-            }
-
-        } else {
-            super.onActivityResult(requestCode, resultCode, data);
-        }
     }
 
     @Override

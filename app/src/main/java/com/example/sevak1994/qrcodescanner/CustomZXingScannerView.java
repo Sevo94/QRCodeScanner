@@ -11,12 +11,13 @@ import android.view.View;
 
 import me.dm7.barcodescanner.core.DisplayUtils;
 import me.dm7.barcodescanner.core.IViewFinder;
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 /**
  * Created by Admin on 9/9/2017.
  */
 
-public class CustomZXingScannerView extends View implements IViewFinder {
+public class CustomZXIngScannerView extends View implements IViewFinder {
     private static final String TAG = "ViewFinderView";
 
     private Rect mFramingRect;
@@ -47,12 +48,12 @@ public class CustomZXingScannerView extends View implements IViewFinder {
     protected int mBorderLineLength;
     protected boolean mSquareViewFinder;
 
-    public CustomZXingScannerView(Context context) {
+    public CustomZXIngScannerView(Context context) {
         super(context);
         init();
     }
 
-    public CustomZXingScannerView(Context context, AttributeSet attrs) {
+    public CustomZXIngScannerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
