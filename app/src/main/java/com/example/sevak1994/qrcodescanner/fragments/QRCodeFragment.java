@@ -70,7 +70,7 @@ public class QRCodeFragment extends Fragment {
             bitMatrix = new MultiFormatWriter().encode(
                     textValue,
                     BarcodeFormat.QR_CODE,
-                    750, 750, null
+                    650, 650, null
             );
 
         } catch (IllegalArgumentException Illegalargumentexception) {
