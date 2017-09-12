@@ -59,9 +59,9 @@ public class CustomZXIngScannerView extends View implements IViewFinder {
 
     private void init() {
         //set up laser paint
- //       mLaserPaint = new Paint();
-//        mLaserPaint.setColor(mDefaultLaserColor);
-//        mLaserPaint.setStyle(Paint.Style.FILL);
+        mLaserPaint = new Paint();
+        mLaserPaint.setColor(mDefaultLaserColor);
+        mLaserPaint.setStyle(Paint.Style.FILL);
 
         //finder mask paint
         mFinderMaskPaint = new Paint();
@@ -118,7 +118,7 @@ public class CustomZXIngScannerView extends View implements IViewFinder {
 
         drawViewFinderMask(canvas);
         drawViewFinderBorder(canvas);
-        drawLaser(canvas);
+        //drawLaser(canvas);
     }
 
     public void drawViewFinderMask(Canvas canvas) {
@@ -152,10 +152,10 @@ public class CustomZXIngScannerView extends View implements IViewFinder {
         Rect framingRect = getFramingRect();
 
         // Draw a red "laser scanner" line through the middle to show decoding is active
-        //mLaserPaint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
+        mLaserPaint.setAlpha(SCANNER_ALPHA[scannerAlpha]);
         scannerAlpha = (scannerAlpha + 1) % SCANNER_ALPHA.length;
         int middle = framingRect.height() / 2 + framingRect.top;
-        //canvas.drawRect(framingRect.left + 2, middle - 1, framingRect.right - 1, middle + 2, mLaserPaint);
+        canvas.drawRect(framingRect.left + 2, middle - 1, framingRect.right - 1, middle + 2, mLaserPaint);
 
         postInvalidateDelayed(ANIMATION_DELAY,
                 framingRect.left - POINT_SIZE,
