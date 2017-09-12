@@ -1,12 +1,22 @@
 package com.example.sevak1994.qrcodescanner;
 
+import android.content.res.ColorStateList;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,7 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private TextView mTextMessage;
     private FragmentManager fragmentManager;
     private FragmentActivity fragmentActivity;
+    private BottomNavigationView navigation;
     private Toolbar toolbar;
+
+    private int[][] states = {new int[]{android.R.attr.state_checked},
+            {-android.R.attr.state_checked}};
+
+    private int[] colors = {R.color.colorPrimaryDark,
+            R.color.colorPrimary};
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -70,8 +87,9 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
+        BottomNavigationViewHelper.changeCenterIconSize(navigation, getApplicationContext());
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setItemIconTintList(null);
 
