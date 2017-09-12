@@ -14,7 +14,8 @@
         <ImageView
             android:id="@+id/blur_pro_pic"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="match_parent"

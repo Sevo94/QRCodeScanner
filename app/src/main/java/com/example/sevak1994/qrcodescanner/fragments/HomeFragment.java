@@ -2,7 +2,6 @@ package com.example.sevak1994.qrcodescanner.fragments;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -51,10 +50,10 @@ public class HomeFragment extends Fragment {
         activity.setToolbarTitle(getResources().getString(R.string.title_home));
         initFragmentUi();
 
-//        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.profile);    //scale 0.2f radius = 10;
-//        scaleBitmap(0.2f);
-//
-//        blurProfilePictrue.setImageBitmap(BitmapUtils.fastblur(bitmap, 0.2f, 5));
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.profile);    //scale 0.2f radius = 10;
+        scaleBitmap(0.2f);
+
+        blurProfilePictrue.setImageBitmap(BitmapUtils.fastblur(bitmap, 0.2f, 5));
     }
 
     private void scaleBitmap(float scale) {
