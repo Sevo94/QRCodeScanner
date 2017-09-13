@@ -1,5 +1,6 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -50,10 +51,8 @@ public class HomeFragment extends Fragment {
         emailLayout = fragmentRootView.findViewById(R.id.email);
         addressLayout = fragmentRootView.findViewById(R.id.address);
 
-        ImageView mobileIV = mobileLayout.findViewById(R.id.icon_image_view);
-        mobileIV.setBackgroundResource(R.drawable.call);
-        mobileIV.setColorFilter(getResources().getColor(R.color.colorPrimary));
-        emailLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.email);
-        addressLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.location);
+        mobileLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.ic_call_white_24dp);
+        emailLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.ic_chat_bubble_white_24dp);
+        addressLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.ic_location_on_white_24dp);
     }
 }
