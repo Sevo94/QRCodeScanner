@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.sevak1994.qrcodescanner.MainActivity;
@@ -49,7 +50,9 @@ public class HomeFragment extends Fragment {
         emailLayout = fragmentRootView.findViewById(R.id.email);
         addressLayout = fragmentRootView.findViewById(R.id.address);
 
-        mobileLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.call);
+        ImageView mobileIV = mobileLayout.findViewById(R.id.icon_image_view);
+        mobileIV.setBackgroundResource(R.drawable.call);
+        mobileIV.setColorFilter(getResources().getColor(R.color.colorPrimary));
         emailLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.email);
         addressLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.location);
     }
