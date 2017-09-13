@@ -1,5 +1,7 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.sevak1994.qrcodescanner.BitmapUtils;
 import com.example.sevak1994.qrcodescanner.MainActivity;
 import com.example.sevak1994.qrcodescanner.R;
 
@@ -25,6 +28,8 @@ public class HomeFragment extends Fragment {
     private LinearLayout mobileLayout;
     private LinearLayout emailLayout;
     private LinearLayout addressLayout;
+
+    private ImageView blurProfilePictrue;
 
     public HomeFragment() {
     }
@@ -44,12 +49,16 @@ public class HomeFragment extends Fragment {
 
         activity.setToolbarTitle(getResources().getString(R.string.title_home));
         initFragmentUi();
+
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_call_black_24dp);
+//        blurProfilePictrue.setImageBitmap(BitmapUtils.fastblur(bitmap, 2, 1));
     }
 
     private void initFragmentUi() {
         mobileLayout = fragmentRootView.findViewById(R.id.mobile);
         emailLayout = fragmentRootView.findViewById(R.id.email);
         addressLayout = fragmentRootView.findViewById(R.id.address);
+        blurProfilePictrue = fragmentRootView.findViewById(R.id.blur_pro_pic);
 
         mobileLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.ic_call_white_24dp);
         emailLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.ic_chat_bubble_white_24dp);
