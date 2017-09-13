@@ -30,6 +30,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout addressLayout;
 
     private ImageView blurProfilePictrue;
+    private Bitmap bitmap;
 
     public HomeFragment() {
     }
@@ -50,8 +51,16 @@ public class HomeFragment extends Fragment {
         activity.setToolbarTitle(getResources().getString(R.string.title_home));
         initFragmentUi();
 
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_call_black_24dp);
-//        blurProfilePictrue.setImageBitmap(BitmapUtils.fastblur(bitmap, 2, 1));
+//        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.profile);    //scale 0.2f radius = 10;
+//        scaleBitmap(0.2f);
+//
+//        blurProfilePictrue.setImageBitmap(BitmapUtils.fastblur(bitmap, 0.2f, 5));
+    }
+
+    private void scaleBitmap(float scale) {
+        int width = Math.round(bitmap.getWidth() * scale);
+        int height = Math.round(bitmap.getHeight() * scale);
+        bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
     }
 
     private void initFragmentUi() {
