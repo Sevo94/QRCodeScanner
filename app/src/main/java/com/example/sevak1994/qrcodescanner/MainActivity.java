@@ -61,7 +61,11 @@ public class MainActivity extends AppCompatActivity {
         fragmentActivity = this;
         fragmentManager = FragmentManager.getInstance();
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getResources().getString(R.string.title_home));
+        }
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
