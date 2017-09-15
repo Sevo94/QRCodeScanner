@@ -2,6 +2,7 @@ package com.example.sevak1994.qrcodescanner.fragments;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,7 +29,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout emailLayout;
     private LinearLayout addressLayout;
 
-    private ImageView blurProfilePictrue;
+    private ImageView blurProfilePicture;
     private Bitmap bitmap;
 
     public HomeFragment() {
@@ -50,23 +51,15 @@ public class HomeFragment extends Fragment {
         activity.setToolbarTitle(getResources().getString(R.string.title_home));
         initFragmentUi();
 
-        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.profile);    //scale 0.2f radius = 10;
-//      scaleBitmap(0.2f);
-
-        blurProfilePictrue.setImageBitmap(BitmapUtils.fastblur(bitmap, 0.04f, 5));
+        bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.profile);
+        blurProfilePicture.setImageBitmap(BitmapUtils.fastblur(bitmap, 0.04f, 5));
     }
-
-//    private void scaleBitmap(float scale) {
-//        int width = Math.round(bitmap.getWidth() * scale);
-//        int height = Math.round(bitmap.getHeight() * scale);
-//        bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
-//    }
 
     private void initFragmentUi() {
         mobileLayout = fragmentRootView.findViewById(R.id.mobile);
         emailLayout = fragmentRootView.findViewById(R.id.email);
         addressLayout = fragmentRootView.findViewById(R.id.address);
-        blurProfilePictrue = fragmentRootView.findViewById(R.id.blur_pro_pic);
+        blurProfilePicture = fragmentRootView.findViewById(R.id.blur_pro_pic);
 
         mobileLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.ic_call_white_24dp);
         emailLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.ic_chat_bubble_white_24dp);
