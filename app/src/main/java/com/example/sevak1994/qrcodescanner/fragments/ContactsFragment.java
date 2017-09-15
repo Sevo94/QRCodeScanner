@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.sevak1994.qrcodescanner.MainActivity;
+import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.R;
 
 /**
@@ -17,7 +17,7 @@ import com.example.sevak1994.qrcodescanner.R;
 public class ContactsFragment extends Fragment {
 
     private View fragmentRootView;
-    private MainActivity activity;
+    private HomeActivity activity;
 
     public ContactsFragment() {
     }
@@ -33,7 +33,7 @@ public class ContactsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        activity = (MainActivity) getActivity();
+        activity = (HomeActivity) getActivity();
 
         activity.setToolbarTitle(getResources().getString(R.string.title_contacts));
     }

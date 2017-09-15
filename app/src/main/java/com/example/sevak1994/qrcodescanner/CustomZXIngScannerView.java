@@ -135,6 +135,10 @@ public class CustomZXIngScannerView extends View implements IViewFinder {
     public void drawViewFinderBorder(Canvas canvas) {
         Rect framingRect = getFramingRect();
 
+//        for (int i = framingRect.left - 1; i < framingRect.height(); i = i + mBorderLineLength) {
+//            canvas.drawLine(framingRect.left - 1, i, framingRect.left - 1, i + mBorderLineLength, mBorderPaint);
+//        }
+
         canvas.drawLine(framingRect.left - 1, framingRect.top - 1, framingRect.left - 1, framingRect.top - 1 + mBorderLineLength, mBorderPaint);
         canvas.drawLine(framingRect.left - 1, framingRect.top - 1, framingRect.left - 1 + mBorderLineLength, framingRect.top - 1, mBorderPaint);
 

@@ -1,4 +1,4 @@
-package com.example.sevak1994.qrcodescanner;
+package com.example.sevak1994.qrcodescanner.activities;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-public class MainActivity extends AppCompatActivity {
+import com.example.sevak1994.qrcodescanner.helper.BottomNavigationViewHelper;
+import com.example.sevak1994.qrcodescanner.FragmentManager;
+import com.example.sevak1994.qrcodescanner.R;
+
+public class HomeActivity extends AppCompatActivity {
 
     private FragmentManager fragmentManager;
     private FragmentActivity fragmentActivity;

@@ -1,4 +1,4 @@
-package com.example.sevak1994.qrcodescanner;
+package com.example.sevak1994.qrcodescanner.helper;
 
 import android.content.Context;
 import android.content.res.Resources;
@@ -11,14 +11,16 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.sevak1994.qrcodescanner.R;
+
 import java.lang.reflect.Field;
 
 /**
  * Created by Sevak1994 on 9/8/2017.
  */
 
-class BottomNavigationViewHelper {
-    static void disableShiftMode(BottomNavigationView view) {
+public class BottomNavigationViewHelper {
+    public static void disableShiftMode(BottomNavigationView view) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
         try {
             Field shiftingMode = menuView.getClass().getDeclaredField("mShiftingMode");
@@ -39,7 +41,7 @@ class BottomNavigationViewHelper {
         }
     }
 
-    static void changeCenterIconSize(BottomNavigationView navigation, Context context) {
+    public static void changeCenterIconSize(BottomNavigationView navigation, Context context) {
         BottomNavigationMenuView menuView = (BottomNavigationMenuView) navigation.getChildAt(0);
 
         for (int i = 0; i < menuView.getChildCount(); i++) {

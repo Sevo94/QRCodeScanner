@@ -2,7 +2,6 @@ package com.example.sevak1994.qrcodescanner.fragments;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -12,8 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.example.sevak1994.qrcodescanner.BitmapUtils;
-import com.example.sevak1994.qrcodescanner.MainActivity;
+import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
+import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.R;
 
 /**
@@ -23,7 +22,7 @@ import com.example.sevak1994.qrcodescanner.R;
 public class HomeFragment extends Fragment {
 
     private View fragmentRootView;
-    private MainActivity activity;
+    private HomeActivity activity;
 
     private LinearLayout mobileLayout;
     private LinearLayout emailLayout;
@@ -46,7 +45,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        activity = (MainActivity) getActivity();
+        activity = (HomeActivity) getActivity();
 
         activity.setToolbarTitle(getResources().getString(R.string.title_home));
         initFragmentUi();

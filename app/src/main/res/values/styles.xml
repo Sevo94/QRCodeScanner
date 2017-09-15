@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="StartTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/first_page_color</item>
+        <item name="colorPrimaryDark">@color/first_page_color</item>
+        <item name="colorAccent">@color/first_page_color</item>
+    </style>
+
 </resources>

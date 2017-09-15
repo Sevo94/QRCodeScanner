@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.sevak1994.qrcodescanner.CustomZXIngScannerView;
-import com.example.sevak1994.qrcodescanner.MainActivity;
+import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.R;
 import com.google.zxing.Result;
 
@@ -25,7 +25,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class QRScannerFragment extends Fragment implements ZXingScannerView.ResultHandler {
 
     private View fragmentRootView;
-    private MainActivity activity;
+    private HomeActivity activity;
     private ZXingScannerView scannerView;
     private LinearLayout scannerViewLayout;
     private CustomZXIngScannerView customZXingScannerView;
@@ -46,7 +46,7 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        activity = (MainActivity) getActivity();
+        activity = (HomeActivity) getActivity();
         activity.setToolbarTitle(getResources().getString(R.string.title_qr_scanner));
 
         customZXingScannerView = new CustomZXIngScannerView(getContext());

@@ -20,7 +20,7 @@ public class FragmentManager {
     private FragmentManager() {
     }
 
-    static FragmentManager getInstance() {
+    public static FragmentManager getInstance() {
         if (instance == null) {
             synchronized (FragmentManager.class) {
                 if (instance == null) {

@@ -1,4 +1,4 @@
-package com.example.sevak1994.qrcodescanner;
+package com.example.sevak1994.qrcodescanner.helper;
 
 import android.graphics.Bitmap;
 import android.util.Log;
