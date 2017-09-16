@@ -2,7 +2,9 @@ package com.example.sevak1994.qrcodescanner;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 
+import com.example.sevak1994.qrcodescanner.fragments.ContactInfoFragment;
 import com.example.sevak1994.qrcodescanner.fragments.ContactsFragment;
 import com.example.sevak1994.qrcodescanner.fragments.HomeFragment;
 import com.example.sevak1994.qrcodescanner.fragments.QRCodeFragment;
@@ -61,7 +63,18 @@ public class FragmentManager {
 
     }
 
+    public void startContactInfoFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
+        ContactInfoFragment contactInfoFragment = new ContactInfoFragment();
+        startFragmentTransaction(fragmentActivity, contactInfoFragment, enterAnim, exitAnim);
+    }
+
     private void startFragmentTransaction(FragmentActivity fragmentActivity, Fragment fragment) {
         fragmentActivity.getSupportFragmentManager().beginTransaction().replace(R.id.content, fragment).commit();
+    }
+
+    private void startFragmentTransaction(FragmentActivity fragmentActivity, Fragment fragment, int enterAnim, int exitAnim) {
+        FragmentTransaction fragmentTransaction = fragmentActivity.getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.setCustomAnimations(enterAnim, exitAnim);
+        fragmentTransaction.replace(R.id.content, fragment).commit();
     }
 }

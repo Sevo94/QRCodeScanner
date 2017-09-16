@@ -6,7 +6,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.R;
 
@@ -14,10 +16,11 @@ import com.example.sevak1994.qrcodescanner.R;
  * Created by Admin on 9/7/2017.
  */
 
-public class SettingsFragment extends Fragment {
+public class SettingsFragment extends Fragment implements View.OnClickListener {
 
     private View fragmentRootView;
     private HomeActivity activity;
+    private LinearLayout contactInfo;
 
     public SettingsFragment() {
     }
@@ -35,6 +38,25 @@ public class SettingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         activity = (HomeActivity) getActivity();
 
-        activity.setToolbarTitle(getResources().getString(R.string.title_home));
+        activity.setToolbarTitle(getResources().getString(R.string.title_settings));
+        initFragmentUI();
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.contact_info:
+                FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter, R.anim.exit);
+                break;
+        }
+    }
+
+    private void initFragmentUI() {
+        contactInfo = fragmentRootView.findViewById(R.id.contact_info);
+        setOnClickListener();
+    }
+
+    private void setOnClickListener() {
+        contactInfo.setOnClickListener(this);
     }
 }
