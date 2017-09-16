@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
+import com.example.sevak1994.qrcodescanner.fragments.ContactInfoEditFragment;
 import com.example.sevak1994.qrcodescanner.fragments.ContactInfoFragment;
 import com.example.sevak1994.qrcodescanner.fragments.ContactsFragment;
 import com.example.sevak1994.qrcodescanner.fragments.HomeFragment;
@@ -60,12 +61,16 @@ public class FragmentManager {
     public void startSettingsFragment(FragmentActivity fragmentActivity) {
         SettingsFragment settingsFragment = new SettingsFragment();
         startFragmentTransaction(fragmentActivity, settingsFragment);
-
     }
 
     public void startContactInfoFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
         ContactInfoFragment contactInfoFragment = new ContactInfoFragment();
         startFragmentTransaction(fragmentActivity, contactInfoFragment, enterAnim, exitAnim);
+    }
+
+    public void startContactInfoEditFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
+        ContactInfoEditFragment contactInfoEditFragment = new ContactInfoEditFragment();
+        startFragmentTransaction(fragmentActivity, contactInfoEditFragment, enterAnim, exitAnim);
     }
 
     private void startFragmentTransaction(FragmentActivity fragmentActivity, Fragment fragment) {

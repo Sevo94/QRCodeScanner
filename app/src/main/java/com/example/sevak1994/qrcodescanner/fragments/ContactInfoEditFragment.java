@@ -11,19 +11,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
 
 /**
- * Created by Sevak1994 on 9/16/2017.
+ * Created by Sevak1994 on 9/17/2017.
  */
 
-public class ContactInfoFragment extends Fragment {
+public class ContactInfoEditFragment extends Fragment {
 
-    View fragmentRootView;
-    FragmentActivity activity;
+    private View fragmentRootView;
+    private FragmentActivity activity;
 
-    public ContactInfoFragment() {
+    public ContactInfoEditFragment() {
     }
 
     @Override
@@ -35,7 +34,7 @@ public class ContactInfoFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        fragmentRootView = inflater.inflate(R.layout.fragment_contact_info, container, false);
+        fragmentRootView = inflater.inflate(R.layout.fragment_contact_info_edit, container, false);
 
         return fragmentRootView;
     }
@@ -45,12 +44,11 @@ public class ContactInfoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         activity = getActivity();
-        activity.setTitle(getResources().getString(R.string.personal_info));
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.contact_info_edit_menu, menu);
+        inflater.inflate(R.menu.contact_info_done_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -59,9 +57,10 @@ public class ContactInfoFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.edit_contacts:
-                FragmentManager.getInstance().startContactInfoEditFragment(activity, R.anim.enter, R.anim.exit);
+                //TODO make server request
                 break;
         }
         return super.onOptionsItemSelected(item);
+
     }
 }
