@@ -36,6 +36,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text="Sevag Mardirossian"
+                android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
@@ -43,6 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Android Developer"
+                android:textColor="@color/white"
                 android:textSize="10sp" />
 
             <LinearLayout
@@ -59,15 +61,17 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
+                        android:id="@+id/mini_pro_iv"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="4dp"
                         android:src="@drawable/contact" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="500+" />
+                        android:text="500+"
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
 
@@ -78,15 +82,17 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
+                        android:id="@+id/website_iv"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="4dp"
                         android:src="@drawable/website" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="website" />
+                        android:text="website"
+                        android:textColor="@color/white" />
                 </LinearLayout>
 
 
@@ -99,13 +105,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="socials" />
+                        android:text="socials"
+                        android:textColor="@color/white" />
 
                     <ImageView
-                        android:id="@+id/social_iv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="3dp"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_margin="4dp"
                         android:src="@drawable/social" />
                 </LinearLayout>
 

@@ -60,7 +60,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //Fabric.with(this, new Crashlytics());
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_home);
 
         fragmentActivity = this;
         fragmentManager = FragmentManager.getInstance();

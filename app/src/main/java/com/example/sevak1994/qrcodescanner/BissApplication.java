@@ -9,17 +9,17 @@ import android.app.Application;
 public class BissApplication extends Application {
 
     private static BissApplication instance = new BissApplication();
-    private boolean LaunchFirstTime = true;
+    private boolean firstTimeLaunch = true;
 
     public static BissApplication getInstance() {
         return instance;
     }
 
-    public boolean isLaunchFirstTime() {
-        return LaunchFirstTime;
+    public boolean isFirstTimeLaunch() {
+        return firstTimeLaunch;
     }
 
-    public void setLaunchFirstTime(boolean launchFirstTime) {
-        LaunchFirstTime = launchFirstTime;
+    public void setFirstTimeLaunch(boolean firstTimeLaunch) {
+        this.firstTimeLaunch = firstTimeLaunch;
     }
 }

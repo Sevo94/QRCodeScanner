@@ -31,6 +31,9 @@ public class HomeFragment extends Fragment {
     private ImageView blurProfilePicture;
     private Bitmap bitmap;
 
+    private ImageView miniProIV;
+    private ImageView websiteIV;
+
     public HomeFragment() {
     }
 
@@ -59,6 +62,11 @@ public class HomeFragment extends Fragment {
         emailLayout = fragmentRootView.findViewById(R.id.email);
         addressLayout = fragmentRootView.findViewById(R.id.address);
         blurProfilePicture = fragmentRootView.findViewById(R.id.blur_pro_pic);
+        miniProIV = fragmentRootView.findViewById(R.id.mini_pro_iv);
+        websiteIV = fragmentRootView.findViewById(R.id.website_iv);
+
+        miniProIV.setColorFilter(getResources().getColor(R.color.white));
+        websiteIV.setColorFilter(getResources().getColor(R.color.white));
 
         mobileLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.ic_call_white_24dp);
         emailLayout.findViewById(R.id.icon_image_view).setBackgroundResource(R.drawable.ic_chat_bubble_white_24dp);
