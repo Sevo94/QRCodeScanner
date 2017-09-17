@@ -46,7 +46,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.contact_info:
-                FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter, R.anim.exit);
+                FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter_from_left, R.anim.exit_to_right);
                 break;
         }
     }

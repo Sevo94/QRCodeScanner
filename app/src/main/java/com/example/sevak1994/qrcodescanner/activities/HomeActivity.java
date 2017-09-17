@@ -6,11 +6,13 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.helper.BottomNavigationViewHelper;
+import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -18,6 +20,8 @@ public class HomeActivity extends AppCompatActivity {
     private FragmentActivity fragmentActivity;
     private BottomNavigationView navigation;
     private Toolbar toolbar;
+
+    private BackKeyListener backKeyListener;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -83,5 +87,29 @@ public class HomeActivity extends AppCompatActivity {
     public void setToolbarTitle(String title) {
         toolbar.setTitle(title);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+    }
+
+    public void setBackKeyListener(BackKeyListener backKeyListener) {
+        this.backKeyListener = backKeyListener;
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+
+            if (backKeyListener != null) {
+                backKeyListener.onBackPressed();
+            }
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (backKeyListener != null) {
+            backKeyListener.onBackPressed();
+        }
     }
 }

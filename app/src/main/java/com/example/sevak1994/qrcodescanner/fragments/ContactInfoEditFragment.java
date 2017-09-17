@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,13 +12,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 
 /**
  * Created by Sevak1994 on 9/17/2017.
  */
 
-public class ContactInfoEditFragment extends Fragment {
+public class ContactInfoEditFragment extends Fragment implements BackKeyListener {
 
     private View fragmentRootView;
     private FragmentActivity activity;
@@ -44,6 +47,9 @@ public class ContactInfoEditFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         activity = getActivity();
+        if (((AppCompatActivity) activity).getSupportActionBar() != null) {
+            ((AppCompatActivity) activity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     @Override
@@ -59,8 +65,15 @@ public class ContactInfoEditFragment extends Fragment {
             case R.id.edit_contacts:
                 //TODO make server request
                 break;
+            case android.R.id.home:
+                FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter_from_right, R.anim.exit_to_left);
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
 
+    @Override
+    public void onBackPressed() {
+        FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter_from_right, R.anim.exit_to_left);
     }
 }

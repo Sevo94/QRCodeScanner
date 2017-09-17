@@ -43,7 +43,6 @@ public class FragmentManager {
     public void startContactsFragment(FragmentActivity fragmentActivity) {
         ContactsFragment contactsFragment = new ContactsFragment();
         startFragmentTransaction(fragmentActivity, contactsFragment);
-
     }
 
     public void startQRScannerFragment(FragmentActivity fragmentActivity) {
@@ -61,6 +60,11 @@ public class FragmentManager {
     public void startSettingsFragment(FragmentActivity fragmentActivity) {
         SettingsFragment settingsFragment = new SettingsFragment();
         startFragmentTransaction(fragmentActivity, settingsFragment);
+    }
+
+    public void startSettingsFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
+        SettingsFragment settingsFragment = new SettingsFragment();
+        startFragmentTransaction(fragmentActivity, settingsFragment, enterAnim, exitAnim);
     }
 
     public void startContactInfoFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
