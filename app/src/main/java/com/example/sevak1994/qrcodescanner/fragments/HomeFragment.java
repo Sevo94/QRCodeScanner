@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
-import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
+import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
 
 /**
  * Created by Admin on 9/7/2017.

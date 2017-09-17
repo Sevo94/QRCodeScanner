@@ -216,4 +216,20 @@ public class BitmapUtils {
 
         return (bitmap);
     }
+
+    public static Bitmap resizeBitmap(Bitmap bitmap, int maxSize) {
+        int outWidth;
+        int outHeight;
+        int inWidth = bitmap.getWidth();
+        int inHeight = bitmap.getHeight();
+        if (inWidth > inHeight) {
+            outWidth = maxSize;
+            outHeight = (inHeight * maxSize) / inWidth;
+        } else {
+            outHeight = maxSize;
+            outWidth = (inWidth * maxSize) / inHeight;
+        }
+
+        return Bitmap.createScaledBitmap(bitmap, outWidth, outHeight, false);
+    }
 }

@@ -8,9 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.example.sevak1994.qrcodescanner.helper.BottomNavigationViewHelper;
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.helper.BottomNavigationViewHelper;
 
 public class HomeActivity extends AppCompatActivity {
 
