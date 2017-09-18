@@ -6,12 +6,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.adapters.ContactListAdapter;
+import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
 import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
 
 import java.util.ArrayList;
@@ -21,14 +23,23 @@ import java.util.List;
  * Created by Admin on 9/7/2017.
  */
 
-public class ContactsFragment extends Fragment {
+public class ContactsFragment extends Fragment implements ActionModeListener {
 
     private View fragmentRootView;
     private HomeActivity activity;
     private RecyclerView contactsListView;
     private List<ContactInfoModel> contactInfoModelList = new ArrayList<>();
+    private ContactListAdapter contactListAdapter;
+
+    private ActionModeListener actionModeListener;
 
     public ContactsFragment() {
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -44,8 +55,13 @@ public class ContactsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         activity = (HomeActivity) getActivity();
 
+        activity.inNormalMode();
         activity.setToolbarTitle(getResources().getString(R.string.title_contacts));
         initRecyclerView();
+    }
+
+    public void setActionModeListener(ActionModeListener actionModeListener) {
+        this.actionModeListener = actionModeListener;
     }
 
     private void initRecyclerView() {
@@ -56,7 +72,7 @@ public class ContactsFragment extends Fragment {
         contactsListView.setHasFixedSize(true);
 
         generateFakeData();
-        ContactListAdapter contactListAdapter = new ContactListAdapter(activity, contactInfoModelList);
+        contactListAdapter = new ContactListAdapter(activity, contactInfoModelList, this);
         contactsListView.setAdapter(contactListAdapter);
     }
 
@@ -87,7 +103,44 @@ public class ContactsFragment extends Fragment {
 
         contactInfoModel = new ContactInfoModel("Sevag Mardirossian", "Android developer at GG", R.drawable.profile);
         contactInfoModelList.add(contactInfoModel);
+    }
 
+    @Override
+    public void inActionMode() {
+        if (actionModeListener != null) {
+            actionModeListener.inActionMode();
+        }
+        contactListAdapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void inNormalMode() {
+    }
+
+    @Override
+    public void moreItemSelected() {
+        if (actionModeListener != null) {
+            actionModeListener.moreItemSelected();
+        }
+    }
+
+    @Override
+    public void lessItemSelected() {
+        if (actionModeListener != null) {
+            actionModeListener.lessItemSelected();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (actionModeListener != null) {
+                    actionModeListener.inNormalMode();
+                }
+                contactListAdapter.notifyDataSetChanged();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

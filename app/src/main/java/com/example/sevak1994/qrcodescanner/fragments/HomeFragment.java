@@ -50,6 +50,7 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         activity = (HomeActivity) getActivity();
 
+        activity.inNormalMode();
         activity.setToolbarTitle(getResources().getString(R.string.title_home));
         initFragmentUi();
 

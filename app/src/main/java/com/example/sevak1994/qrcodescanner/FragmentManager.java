@@ -11,6 +11,7 @@ import com.example.sevak1994.qrcodescanner.fragments.HomeFragment;
 import com.example.sevak1994.qrcodescanner.fragments.QRCodeFragment;
 import com.example.sevak1994.qrcodescanner.fragments.QRScannerFragment;
 import com.example.sevak1994.qrcodescanner.fragments.SettingsFragment;
+import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
 
 /**
  * Created by Admin on 9/8/2017.
@@ -40,8 +41,9 @@ public class FragmentManager {
 
     }
 
-    public void startContactsFragment(FragmentActivity fragmentActivity) {
+    public void startContactsFragment(FragmentActivity fragmentActivity, ActionModeListener actionModeListener) {
         ContactsFragment contactsFragment = new ContactsFragment();
+        contactsFragment.setActionModeListener(actionModeListener);
         startFragmentTransaction(fragmentActivity, contactsFragment);
     }
 

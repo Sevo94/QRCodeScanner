@@ -8,13 +8,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.helper.BottomNavigationViewHelper;
+import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements ActionModeListener {
 
     private FragmentManager fragmentManager;
     private FragmentActivity fragmentActivity;
@@ -22,6 +25,13 @@ public class HomeActivity extends AppCompatActivity {
     private Toolbar toolbar;
 
     private BackKeyListener backKeyListener;
+
+    private boolean isInActionMode;
+
+    private TextView counterTV;
+    private int selectedItemsCount;
+
+    private ActionModeListener actionModeListener = this;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -36,7 +46,7 @@ public class HomeActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_contacts:
                     if (!item.isChecked()) {
-                        fragmentManager.startContactsFragment(fragmentActivity);
+                        fragmentManager.startContactsFragment(fragmentActivity, actionModeListener);
                     }
                     return true;
                 case R.id.navigation_qr_scanner:
@@ -59,6 +69,10 @@ public class HomeActivity extends AppCompatActivity {
         }
     };
 
+    public boolean isInActionMode() {
+        return isInActionMode;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,14 +80,16 @@ public class HomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_home);
 
+        counterTV = (TextView) findViewById(R.id.item_counter);
+
         fragmentActivity = this;
         fragmentManager = FragmentManager.getInstance();
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(getResources().getString(R.string.title_home));
-        }
+//        if (getSupportActionBar() != null) {
+//            getSupportActionBar().setTitle(getResources().getString(R.string.title_home));
+//        }
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
@@ -85,8 +101,8 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void setToolbarTitle(String title) {
-        toolbar.setTitle(title);
-        toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        counterTV.setVisibility(View.VISIBLE);
+        counterTV.setText(title);
     }
 
     public void setBackKeyListener(BackKeyListener backKeyListener) {
@@ -111,5 +127,40 @@ public class HomeActivity extends AppCompatActivity {
         if (backKeyListener != null) {
             backKeyListener.onBackPressed();
         }
+    }
+
+    @Override
+    public void inActionMode() {
+        toolbar.getMenu().clear();
+        isInActionMode = true;
+        toolbar.inflateMenu(R.menu.menu_action_mode);
+        counterTV.setText(getResources().getString(R.string.items_selected));
+        counterTV.setVisibility(View.VISIBLE);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        selectedItemsCount = 0;
+    }
+
+    @Override
+    public void inNormalMode() {
+        toolbar.getMenu().clear();
+        isInActionMode = false;
+        counterTV.setText(getResources().getString(R.string.title_contacts));
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
+        selectedItemsCount = 0;
+    }
+
+    @Override
+    public void moreItemSelected() {
+        counterTV.setText(String.valueOf(++selectedItemsCount) + " " + getResources().getString(R.string.item_selected));
+    }
+
+    @Override
+    public void lessItemSelected() {
+        counterTV.setText(String.valueOf(--selectedItemsCount) + " " + getResources().getString(R.string.item_selected));
     }
 }
