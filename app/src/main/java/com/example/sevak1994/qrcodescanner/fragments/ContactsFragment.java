@@ -136,7 +136,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
         if (actionModeListener != null) {
             actionModeListener.lessItemSelected(position);
         }
-        checkedItems.remove(position);
+        checkedItems.remove(Integer.valueOf(position));
     }
 
     @Override
