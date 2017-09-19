@@ -19,4 +19,5 @@
     <string name="mobile">Mobile</string>
     <string name="items_selected">0 item selected</string>
     <string name="item_selected">item selected</string>
+    <string name="no_selected_items">no selected items</string>
 </resources>

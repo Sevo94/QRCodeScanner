@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
@@ -147,7 +148,11 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
                 contactListAdapter.notifyDataSetChanged();
                 break;
             case R.id.delete:
-                removeCheckedDataFromAdapter();
+                if (checkedItems.size() > 0) {
+                    removeCheckedDataFromAdapter();
+                } else {
+                    Toast.makeText(getContext(), getResources().getString(R.string.no_selected_items), Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
         return super.onOptionsItemSelected(item);
