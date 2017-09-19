@@ -28,14 +28,14 @@ import java.util.List;
 
 public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactsViewHolder> implements View.OnLongClickListener, CompoundButton.OnCheckedChangeListener {
 
-    public static class ContactsViewHolder extends RecyclerView.ViewHolder {
+    static class ContactsViewHolder extends RecyclerView.ViewHolder {
 
         private ImageView pictureIV;
         private CheckBox checkBox;
         private TextView nameTV;
         private TextView jobTV;
 
-        public ContactsViewHolder(View itemView) {
+        ContactsViewHolder(View itemView) {
             super(itemView);
             pictureIV = itemView.findViewById(R.id.profile_image);
             nameTV = itemView.findViewById(R.id.name);
@@ -107,10 +107,12 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (compoundButton.isChecked() && actionModeListener != null) {
-            actionModeListener.moreItemSelected();
-        } else if (actionModeListener != null) {
-            actionModeListener.lessItemSelected();
+        if (compoundButton.isPressed()) {
+            if (compoundButton.isChecked() && actionModeListener != null) {
+                actionModeListener.moreItemSelected();
+            } else if (!compoundButton.isChecked() && actionModeListener != null) {
+                actionModeListener.lessItemSelected();
+            }
         }
     }
 }
