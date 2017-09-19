@@ -68,8 +68,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         holder.nameTV.setText(contactInfoModelList.get(position).getName());
         holder.jobTV.setText(contactInfoModelList.get(position).getJob());
 
-        //holder.checkBox.setOnCheckedChangeListener(this);
-
         SimpleTarget simpleTarget = new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
