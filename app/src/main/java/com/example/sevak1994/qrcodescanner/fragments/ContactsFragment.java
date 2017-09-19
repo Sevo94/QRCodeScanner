@@ -140,6 +140,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
         checkedItems.remove(Integer.valueOf(position));
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
