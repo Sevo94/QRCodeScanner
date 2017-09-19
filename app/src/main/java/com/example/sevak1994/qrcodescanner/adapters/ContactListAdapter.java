@@ -26,7 +26,7 @@ import java.util.List;
  * Created by Sevak1994 on 9/17/2017.
  */
 
-public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactsViewHolder> implements View.OnLongClickListener, CompoundButton.OnCheckedChangeListener {
+public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.ContactsViewHolder> implements View.OnLongClickListener {
 
     static class ContactsViewHolder extends RecyclerView.ViewHolder {
 
@@ -68,7 +68,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         holder.nameTV.setText(contactInfoModelList.get(position).getName());
         holder.jobTV.setText(contactInfoModelList.get(position).getJob());
 
-        holder.checkBox.setOnCheckedChangeListener(this);
+        //holder.checkBox.setOnCheckedChangeListener(this);
 
         SimpleTarget simpleTarget = new SimpleTarget<Bitmap>() {
             @Override
@@ -90,6 +90,20 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             holder.checkBox.setVisibility(View.VISIBLE);
             holder.checkBox.setChecked(false);
         }
+
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (compoundButton.isPressed()) {
+                    if (compoundButton.isChecked() && actionModeListener != null) {
+                        actionModeListener.moreItemSelected(holder.getAdapterPosition());
+                    } else if (!compoundButton.isChecked() && actionModeListener != null) {
+                        actionModeListener.lessItemSelected(holder.getAdapterPosition());
+                    }
+                }
+            }
+        });
+
     }
 
     @Override
@@ -103,16 +117,5 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             actionModeListener.inActionMode();
         }
         return true;
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        if (compoundButton.isPressed()) {
-            if (compoundButton.isChecked() && actionModeListener != null) {
-                actionModeListener.moreItemSelected();
-            } else if (!compoundButton.isChecked() && actionModeListener != null) {
-                actionModeListener.lessItemSelected();
-            }
-        }
     }
 }

@@ -17,6 +17,7 @@ import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
 import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -32,6 +33,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
     private ContactListAdapter contactListAdapter;
 
     private ActionModeListener actionModeListener;
+    private List<Integer> checkedItems = new ArrayList<>();
 
     public ContactsFragment() {
     }
@@ -115,32 +117,48 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
 
     @Override
     public void inNormalMode() {
+        if (actionModeListener != null) {
+            actionModeListener.inNormalMode();
+        }
+        checkedItems.clear();
     }
 
     @Override
-    public void moreItemSelected() {
+    public void moreItemSelected(int position) {
         if (actionModeListener != null) {
-            actionModeListener.moreItemSelected();
+            actionModeListener.moreItemSelected(position);
         }
+        checkedItems.add(position);
     }
 
     @Override
-    public void lessItemSelected() {
+    public void lessItemSelected(int position) {
         if (actionModeListener != null) {
-            actionModeListener.lessItemSelected();
+            actionModeListener.lessItemSelected(position);
         }
+        checkedItems.remove(position);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (actionModeListener != null) {
-                    actionModeListener.inNormalMode();
-                }
+                inNormalMode();
                 contactListAdapter.notifyDataSetChanged();
+                break;
+            case R.id.delete:
+                removeCheckedDataFromAdapter();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void removeCheckedDataFromAdapter() {
+        Collections.sort(checkedItems);
+        for (int i = checkedItems.size() - 1; i >= 0; --i) {
+            contactInfoModelList.remove(contactInfoModelList.get(checkedItems.get(i)));
+        }
+        contactListAdapter.notifyDataSetChanged();
+        inNormalMode();
     }
 }

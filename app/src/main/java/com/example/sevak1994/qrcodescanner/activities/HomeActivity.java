@@ -155,12 +155,12 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
     }
 
     @Override
-    public void moreItemSelected() {
+    public void moreItemSelected(int position) {
         counterTV.setText(String.valueOf(++selectedItemsCount) + " " + getResources().getString(R.string.item_selected));
     }
 
     @Override
-    public void lessItemSelected() {
+    public void lessItemSelected(int position) {
         counterTV.setText(String.valueOf(--selectedItemsCount) + " " + getResources().getString(R.string.item_selected));
     }
 }

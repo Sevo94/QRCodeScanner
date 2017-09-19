@@ -10,7 +10,7 @@ public interface ActionModeListener {
 
     void inNormalMode();
 
-    void moreItemSelected();
+    void moreItemSelected(int position);
 
-    void lessItemSelected();
+    void lessItemSelected(int position);
 }
