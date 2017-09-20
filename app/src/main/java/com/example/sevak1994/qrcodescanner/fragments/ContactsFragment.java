@@ -1,24 +1,22 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.adapters.ContactListAdapter;
+import com.example.sevak1994.qrcodescanner.adapters.ProfileListAdapter;
 import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
 import com.example.sevak1994.qrcodescanner.interfaces.ItemClickListener;
 import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
@@ -26,8 +24,6 @@ import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Admin on 9/7/2017.
@@ -43,7 +39,9 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
     private ActionModeListener actionModeListener;
     private List<Integer> checkedItems = new ArrayList<>();
 
-    private RelativeLayout profileLayout;
+    private SnapHelper snapHelper = new PagerSnapHelper();
+    private RecyclerView profilesListView;
+    private ProfileListAdapter profileListAdapter;
 
     public ContactsFragment() {
     }
@@ -70,36 +68,37 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
         activity.inNormalMode(false);
         activity.setToolbarTitle(getResources().getString(R.string.title_contacts));
 
-        profileLayout = fragmentRootView.findViewById(R.id.profile);
-
         initRecyclerView();
+        initProfilesListView();
     }
 
     @Override
     public void onItemClick(int position) {
-        profileLayout.setVisibility(View.VISIBLE);
-        final CircleImageView circleImageView = fragmentRootView.findViewById(R.id.profile_image);
-        //circleImageView.setImageResource(contactInfoModelList.get(position).getImageUrl());
+        profilesListView.setVisibility(View.VISIBLE);
+        profilesListView.scrollToPosition(position);
+    }
 
-
-        SimpleTarget simpleTarget = new SimpleTarget<Bitmap>() {
-            @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                //holder.pictureIV.setImageBitmap(resource);
-                circleImageView.setImageBitmap(resource);
-            }
-        };
-
-        Glide.with(getContext())
-                .load(contactInfoModelList.get(position).getImageUrl())
-                .asBitmap()
-                .dontAnimate()
-                .placeholder(R.drawable.default_photo)
-                .into(simpleTarget);
+    @Override
+    public void onCloseBtnClick() {
+        profilesListView.setVisibility(View.GONE);
     }
 
     public void setActionModeListener(ActionModeListener actionModeListener) {
         this.actionModeListener = actionModeListener;
+    }
+
+    private void initProfilesListView() {
+        profilesListView = fragmentRootView.findViewById(R.id.profile_list_view);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        profilesListView.setLayoutManager(linearLayoutManager);
+        profilesListView.setHasFixedSize(true);
+
+        profileListAdapter = new ProfileListAdapter(activity, contactInfoModelList, this);
+        profilesListView.setAdapter(profileListAdapter);
+
+        snapHelper.attachToRecyclerView(profilesListView);
     }
 
     private void initRecyclerView() {
@@ -199,6 +198,8 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
             contactInfoModelList.remove(contactInfoModelList.get(checkedItems.get(i)));
         }
         contactListAdapter.notifyDataSetChanged();
+        profileListAdapter.notifyDataSetChanged();
+
         inNormalMode(true);
     }
 }

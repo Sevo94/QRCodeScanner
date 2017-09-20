@@ -81,11 +81,11 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
     private void onClickNavItem(int Id) {
         for (int i = 0; i < navItemIds.length; i++) {
             if (navItemIds[i] == Id && navItemIds[i] != R.id.navigation_qr_code) {
-                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
+                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.active_icon), PorterDuff.Mode.SRC_IN);
                 continue;
             }
             if (navItemIds[i] != R.id.navigation_qr_code) {
-                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.inactive_icon), PorterDuff.Mode.SRC_IN);
             }
         }
     }
@@ -152,6 +152,9 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         toolbar.getMenu().clear();
         isInActionMode = true;
         toolbar.inflateMenu(R.menu.menu_action_mode);
+
+        toolbar.getMenu().findItem(R.id.delete).getIcon().mutate().setColorFilter(getResources().getColor(R.color.toolbar_text_color), PorterDuff.Mode.SRC_ATOP);
+
         counterTV.setText(getResources().getString(R.string.items_selected));
         counterTV.setVisibility(View.VISIBLE);
 

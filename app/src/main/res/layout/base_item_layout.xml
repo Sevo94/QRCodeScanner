@@ -62,7 +62,8 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
-                        android:backgroundTint="@color/colorPrimary" />
+                        android:src="@drawable/delete"
+                        android:tint="@color/toolbar_text_color" />
 
                 </LinearLayout>
             </LinearLayout>

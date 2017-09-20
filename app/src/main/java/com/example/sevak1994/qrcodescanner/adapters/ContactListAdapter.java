@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -32,6 +32,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     static class ContactsViewHolder extends RecyclerView.ViewHolder {
 
+        private LinearLayout parentLayout;
         private ImageView pictureIV;
         private CheckBox checkBox;
         private TextView nameTV;
@@ -39,6 +40,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
         ContactsViewHolder(View itemView) {
             super(itemView);
+            parentLayout = itemView.findViewById(R.id.contact_info);
             pictureIV = itemView.findViewById(R.id.profile_image);
             nameTV = itemView.findViewById(R.id.name);
             jobTV = itemView.findViewById(R.id.job);
@@ -68,7 +70,9 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(mContext, "onClick", Toast.LENGTH_SHORT).show();
+                if (((HomeActivity) mContext).isInActionMode()) {
+                    return;
+                }
                 if (itemClickListener != null) {
                     itemClickListener.onItemClick(contactsViewHolder.getAdapterPosition());
                 }
@@ -82,6 +86,12 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     public void onBindViewHolder(final ContactsViewHolder holder, int position) {
         holder.nameTV.setText(contactInfoModelList.get(position).getName());
         holder.jobTV.setText(contactInfoModelList.get(position).getJob());
+
+        if (position % 2 == 0) {
+            holder.parentLayout.setBackgroundColor(mContext.getResources().getColor(R.color.contact_item_color));
+        } else {
+            holder.parentLayout.setBackgroundColor(mContext.getResources().getColor(R.color.contact_item_color2));
+        }
 
         SimpleTarget simpleTarget = new SimpleTarget<Bitmap>() {
             @Override

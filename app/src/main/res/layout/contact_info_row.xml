@@ -36,7 +36,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/enter_your_name"
-                android:textColor="@color/black"
+                android:textColor="@color/contact_name"
                 android:textSize="16sp" />
 
             <TextView
@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/email"
-                android:textColor="@color/settings_text_color"
+                android:textColor="@color/contact_work"
                 android:textSize="12sp" />
         </LinearLayout>
 

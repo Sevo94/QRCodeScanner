@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#9E9E9E</color>
-    <color name="colorPrimaryDark">#616161</color>
+    <color name="colorPrimary">#fafafa</color>
+    <color name="colorPrimaryDark">#FBFBFB</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFFFF</color>
     <color name="black">#000000</color>
@@ -12,4 +12,11 @@
     <color name="settings_text_color">#9B9B9B</color>
     <color name="blue_text_color">#3F93E9</color>
     <color name="nav_view_border_color">#E7E7E7</color>
+    <color name="toolbar_text_color">#00a2ff</color>
+    <color name="active_icon">#7b7b7b</color>
+    <color name="inactive_icon">#bebebe</color>
+    <color name="contact_item_color">#f9f9f9</color>
+    <color name="contact_item_color2">#FBFBFB</color>
+    <color name="contact_name">#2a2929</color>
+    <color name="contact_work">#747474</color>
 </resources>

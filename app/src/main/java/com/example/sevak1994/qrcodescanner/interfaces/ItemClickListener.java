@@ -7,4 +7,6 @@ package com.example.sevak1994.qrcodescanner.interfaces;
 public interface ItemClickListener {
 
     void onItemClick(int position);
+
+    void onCloseBtnClick();
 }
