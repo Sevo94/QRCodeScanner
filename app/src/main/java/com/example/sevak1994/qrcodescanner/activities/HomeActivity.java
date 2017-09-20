@@ -1,5 +1,7 @@
 package com.example.sevak1994.qrcodescanner.activities;
 
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -33,6 +35,8 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
 
     private ActionModeListener actionModeListener = this;
 
+    private int[] navItemIds = new int[]{R.id.navigation_home, R.id.navigation_contacts, R.id.navigation_qr_code, R.id.navigation_settings};
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -42,32 +46,49 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
                 case R.id.navigation_home:
                     if (!item.isChecked()) {
                         fragmentManager.startHomeFragment(fragmentActivity);
+                        onClickNavItem(item.getItemId());
                     }
                     return true;
                 case R.id.navigation_contacts:
                     if (!item.isChecked()) {
                         fragmentManager.startContactsFragment(fragmentActivity, actionModeListener);
+                        onClickNavItem(item.getItemId());
                     }
                     return true;
                 case R.id.navigation_qr_scanner:
                     if (!item.isChecked()) {
                         fragmentManager.startQRScannerFragment(fragmentActivity);
+                        onClickNavItem(item.getItemId());
                     }
                     return true;
                 case R.id.navigation_qr_code:
                     if (!item.isChecked()) {
                         fragmentManager.startQRCodeFragment(fragmentActivity);
+                        onClickNavItem(item.getItemId());
                     }
                     return true;
                 case R.id.navigation_settings:
                     if (!item.isChecked()) {
                         fragmentManager.startSettingsFragment(fragmentActivity);
+                        onClickNavItem(item.getItemId());
                     }
                     return true;
             }
             return false;
         }
     };
+
+    private void onClickNavItem(int Id) {
+        for (int i = 0; i < navItemIds.length; i++) {
+            if (navItemIds[i] == Id && navItemIds[i] != R.id.navigation_qr_code) {
+                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimaryDark), PorterDuff.Mode.SRC_IN);
+                continue;
+            }
+            if (navItemIds[i] != R.id.navigation_qr_code) {
+                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_IN);
+            }
+        }
+    }
 
     public boolean isInActionMode() {
         return isInActionMode;
