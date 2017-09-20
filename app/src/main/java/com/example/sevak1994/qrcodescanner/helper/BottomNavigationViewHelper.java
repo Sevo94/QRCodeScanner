@@ -49,13 +49,13 @@ public class BottomNavigationViewHelper {
 
             if (itemView.getId() == R.id.navigation_qr_scanner) {
                 final View iconView = itemView.findViewById(android.support.design.R.id.icon);
-                iconView.setPadding(0, convertDpToPixel(2, context), 0, 0);
+                //iconView.setPadding(0, convertDpToPixel(1, context), 0, 0);
                 final ViewGroup.LayoutParams layoutParams = iconView.getLayoutParams();
                 final DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
 
-                layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, displayMetrics); //24 by default
+                layoutParams.height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, displayMetrics); //24 by default
 
-                layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 36, displayMetrics); //24 by default
+                layoutParams.width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40, displayMetrics); //24 by default
                 iconView.setLayoutParams(layoutParams);
             }
         }

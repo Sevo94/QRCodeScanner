@@ -29,7 +29,6 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
 
     private View fragmentRootView;
     private HomeActivity activity;
-    private RecyclerView contactsListView;
     private List<ContactInfoModel> contactInfoModelList = new ArrayList<>();
     private ContactListAdapter contactListAdapter;
 
@@ -68,7 +67,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
     }
 
     private void initRecyclerView() {
-        contactsListView = fragmentRootView.findViewById(R.id.contacts_list_view);
+        RecyclerView contactsListView = fragmentRootView.findViewById(R.id.contacts_list_view);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
         contactsListView.setLayoutManager(linearLayoutManager);
