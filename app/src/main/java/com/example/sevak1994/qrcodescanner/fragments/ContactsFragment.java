@@ -59,6 +59,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
 
         activity.inNormalMode();
         activity.setToolbarTitle(getResources().getString(R.string.title_contacts));
+
         initRecyclerView();
     }
 

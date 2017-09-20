@@ -1,6 +1,5 @@
 package com.example.sevak1994.qrcodescanner.activities;
 
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
@@ -108,9 +108,6 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         toolbar = (Toolbar) findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-//        if (getSupportActionBar() != null) {
-//            getSupportActionBar().setTitle(getResources().getString(R.string.title_home));
-//        }
 
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
@@ -171,6 +168,14 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         counterTV.setText(getResources().getString(R.string.title_contacts));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
+        if (selectedItemsCount > 0) {
+
+            if (selectedItemsCount == 1) {
+                Toast.makeText(this, selectedItemsCount + " item deleted", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, selectedItemsCount + " items deleted", Toast.LENGTH_SHORT).show();
+            }
         }
         selectedItemsCount = 0;
     }

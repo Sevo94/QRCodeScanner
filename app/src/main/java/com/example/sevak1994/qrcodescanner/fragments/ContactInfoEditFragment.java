@@ -76,4 +76,6 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
     public void onBackPressed() {
         FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter_from_right, R.anim.exit_to_left);
     }
+
+
 }
