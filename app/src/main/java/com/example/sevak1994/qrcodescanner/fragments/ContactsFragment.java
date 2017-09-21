@@ -1,5 +1,6 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,6 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.adapters.ContactListAdapter;
@@ -73,8 +78,24 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
     @Override
     public void onItemClick(int position) {
         profileLayout.setVisibility(View.VISIBLE);
-        CircleImageView circleImageView = fragmentRootView.findViewById(R.id.profile_image);
-        circleImageView.setImageResource(contactInfoModelList.get(position).getImageUrl());
+        final CircleImageView circleImageView = fragmentRootView.findViewById(R.id.profile_image);
+        //circleImageView.setImageResource(contactInfoModelList.get(position).getImageUrl());
+
+
+        SimpleTarget simpleTarget = new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                //holder.pictureIV.setImageBitmap(resource);
+                circleImageView.setImageBitmap(resource);
+            }
+        };
+
+        Glide.with(getContext())
+                .load(contactInfoModelList.get(position).getImageUrl())
+                .asBitmap()
+                .dontAnimate()
+                .placeholder(R.drawable.default_photo)
+                .into(simpleTarget);
     }
 
     public void setActionModeListener(ActionModeListener actionModeListener) {
