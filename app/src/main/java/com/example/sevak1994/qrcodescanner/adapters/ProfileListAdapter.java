@@ -2,6 +2,7 @@ package com.example.sevak1994.qrcodescanner.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
 import com.example.sevak1994.qrcodescanner.interfaces.ItemClickListener;
 import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
 
@@ -25,6 +27,7 @@ import java.util.List;
 public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.ProfilesViewHolder> {
 
     public static class ProfilesViewHolder extends RecyclerView.ViewHolder {
+        private ImageView blurProPicture;
         private ImageView profileIV;
         private ImageView closeIV;
         private TextView nameTV;
@@ -32,6 +35,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
 
         public ProfilesViewHolder(View itemView) {
             super(itemView);
+            blurProPicture = itemView.findViewById(R.id.blur_pro_pic);
             profileIV = itemView.findViewById(R.id.profile_image);
             closeIV = itemView.findViewById(R.id.profile_close_iv);
             nameTV = itemView.findViewById(R.id.name_tv);
@@ -74,17 +78,34 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
 
         SimpleTarget simpleTarget = new SimpleTarget<Bitmap>() {
             @Override
-            public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+            public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 holder.profileIV.setImageBitmap(resource);
+
+                final Handler handler = new Handler();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        final Bitmap bitmap = BitmapUtils.fastblur(resource, 1, 5);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                holder.blurProPicture.setImageBitmap(bitmap);
+                            }
+                        });
+                    }
+                }).start();
             }
         };
 
         Glide.with(mContext)
                 .load(contactInfoModel.getImageUrl())
                 .asBitmap()
+                .override(300, 200)
                 .dontAnimate()
                 .placeholder(R.drawable.default_photo)
                 .into(simpleTarget);
+
+
     }
 
     @Override

@@ -103,6 +103,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         Glide.with(mContext)
                 .load(contactInfoModelList.get(position).getImageUrl())
                 .asBitmap()
+                .override(300, 200)
                 .dontAnimate()
                 .placeholder(R.drawable.default_photo)
                 .into(simpleTarget);

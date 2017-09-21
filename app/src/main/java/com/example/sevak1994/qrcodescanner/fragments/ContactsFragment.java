@@ -1,5 +1,8 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +13,7 @@ import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -74,13 +78,21 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
 
     @Override
     public void onItemClick(int position) {
-        profilesListView.setVisibility(View.VISIBLE);
         profilesListView.scrollToPosition(position);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            showRevealAnimation();
+        } else {
+            profilesListView.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     public void onCloseBtnClick() {
-        profilesListView.setVisibility(View.GONE);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            hideRevealAnimation();
+        } else {
+            profilesListView.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void setActionModeListener(ActionModeListener actionModeListener) {
@@ -112,6 +124,37 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
         contactListAdapter = new ContactListAdapter(activity, contactInfoModelList, this, this);
         contactsListView.setAdapter(contactListAdapter);
     }
+
+    private void showRevealAnimation() {
+        int cx = profilesListView.getWidth() / 2;
+        int cy = profilesListView.getHeight() / 2;
+
+        float finalRadius = (float) Math.hypot(cx, cy);
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(profilesListView, cx, cy, 0, finalRadius);
+
+        profilesListView.setVisibility(View.VISIBLE);
+        anim.setDuration(300).start();
+    }
+
+    private void hideRevealAnimation() {
+        int cx = profilesListView.getWidth() / 2;
+        int cy = profilesListView.getHeight() / 2;
+
+        float initialRadius = (float) Math.hypot(cx, cy);
+
+        Animator anim = ViewAnimationUtils.createCircularReveal(profilesListView, cx, cy, initialRadius, 0);
+
+        anim.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                profilesListView.setVisibility(View.INVISIBLE);
+            }
+        });
+        anim.setDuration(200).start();
+    }
+
 
     private void generateFakeData() {
         ContactInfoModel contactInfoModel = new ContactInfoModel("Sevag Mardirossian", "Android developer at GG", R.drawable.profile);
