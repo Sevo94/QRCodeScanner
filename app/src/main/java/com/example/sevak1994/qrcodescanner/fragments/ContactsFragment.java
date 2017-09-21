@@ -9,23 +9,26 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.adapters.ContactListAdapter;
 import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
+import com.example.sevak1994.qrcodescanner.interfaces.ItemClickListener;
 import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by Admin on 9/7/2017.
  */
 
-public class ContactsFragment extends Fragment implements ActionModeListener {
+public class ContactsFragment extends Fragment implements ActionModeListener, ItemClickListener {
 
     private View fragmentRootView;
     private HomeActivity activity;
@@ -34,6 +37,8 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
 
     private ActionModeListener actionModeListener;
     private List<Integer> checkedItems = new ArrayList<>();
+
+    private RelativeLayout profileLayout;
 
     public ContactsFragment() {
     }
@@ -60,7 +65,16 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
         activity.inNormalMode(false);
         activity.setToolbarTitle(getResources().getString(R.string.title_contacts));
 
+        profileLayout = fragmentRootView.findViewById(R.id.profile);
+
         initRecyclerView();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        profileLayout.setVisibility(View.VISIBLE);
+        CircleImageView circleImageView = fragmentRootView.findViewById(R.id.profile_image);
+        circleImageView.setImageResource(contactInfoModelList.get(position).getImageUrl());
     }
 
     public void setActionModeListener(ActionModeListener actionModeListener) {
@@ -75,7 +89,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
         contactsListView.setHasFixedSize(true);
 
         generateFakeData();
-        contactListAdapter = new ContactListAdapter(activity, contactInfoModelList, this);
+        contactListAdapter = new ContactListAdapter(activity, contactInfoModelList, this, this);
         contactsListView.setAdapter(contactListAdapter);
     }
 

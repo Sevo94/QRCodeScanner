@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
@@ -17,6 +18,7 @@ import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
+import com.example.sevak1994.qrcodescanner.interfaces.ItemClickListener;
 import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
 
 import java.util.ArrayList;
@@ -47,20 +49,33 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     private Context mContext;
     private List<ContactInfoModel> contactInfoModelList = new ArrayList<>();
     private ActionModeListener actionModeListener;
+    private ItemClickListener itemClickListener;
 
-    public ContactListAdapter(Context mContext, List<ContactInfoModel> contactInfoModelList, ActionModeListener actionModeListener) {
+    public ContactListAdapter(Context mContext, List<ContactInfoModel> contactInfoModelList, ActionModeListener actionModeListener, ItemClickListener itemClickListener) {
         this.mContext = mContext;
         this.contactInfoModelList = contactInfoModelList;
         this.actionModeListener = actionModeListener;
+        this.itemClickListener = itemClickListener;
     }
 
     @Override
     public ContactsViewHolder onCreateViewHolder(ViewGroup parent, final int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.contact_info_row, parent, false);
 
+        final ContactsViewHolder contactsViewHolder = new ContactsViewHolder(view);
         view.setOnLongClickListener(this);
 
-        return new ContactsViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(mContext, "onClick", Toast.LENGTH_SHORT).show();
+                if (itemClickListener != null) {
+                    itemClickListener.onItemClick(contactsViewHolder.getAdapterPosition());
+                }
+            }
+        });
+
+        return contactsViewHolder;
     }
 
     @Override
@@ -101,7 +116,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 }
             }
         });
-
     }
 
     @Override
