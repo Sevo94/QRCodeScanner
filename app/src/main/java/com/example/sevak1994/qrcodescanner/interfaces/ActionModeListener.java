@@ -8,7 +8,7 @@ public interface ActionModeListener {
 
     void inActionMode();
 
-    void inNormalMode();
+    void inNormalMode(boolean deletedItems);
 
     void moreItemSelected(int position);
 

@@ -44,7 +44,7 @@ public class QRCodeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         activity = (HomeActivity) getActivity();
-        activity.inNormalMode();
+        activity.inNormalMode(false);
         activity.setToolbarTitle(getResources().getString(R.string.title_qr_code));
 
         final Handler handler = new Handler();

@@ -57,7 +57,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
         super.onViewCreated(view, savedInstanceState);
         activity = (HomeActivity) getActivity();
 
-        activity.inNormalMode();
+        activity.inNormalMode(false);
         activity.setToolbarTitle(getResources().getString(R.string.title_contacts));
 
         initRecyclerView();
@@ -117,9 +117,9 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
     }
 
     @Override
-    public void inNormalMode() {
+    public void inNormalMode(boolean deletedItems) {
         if (actionModeListener != null) {
-            actionModeListener.inNormalMode();
+            actionModeListener.inNormalMode(deletedItems);
         }
         checkedItems.clear();
     }
@@ -144,7 +144,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                inNormalMode();
+                inNormalMode(false);
                 contactListAdapter.notifyDataSetChanged();
                 break;
             case R.id.delete:
@@ -164,6 +164,6 @@ public class ContactsFragment extends Fragment implements ActionModeListener {
             contactInfoModelList.remove(contactInfoModelList.get(checkedItems.get(i)));
         }
         contactListAdapter.notifyDataSetChanged();
-        inNormalMode();
+        inNormalMode(true);
     }
 }

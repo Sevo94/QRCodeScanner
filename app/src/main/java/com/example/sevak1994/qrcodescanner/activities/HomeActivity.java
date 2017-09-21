@@ -162,15 +162,14 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
     }
 
     @Override
-    public void inNormalMode() {
+    public void inNormalMode(boolean deletedItems) {
         toolbar.getMenu().clear();
         isInActionMode = false;
         counterTV.setText(getResources().getString(R.string.title_contacts));
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         }
-        if (selectedItemsCount > 0) {
-
+        if (deletedItems && selectedItemsCount > 0) {
             if (selectedItemsCount == 1) {
                 Toast.makeText(this, selectedItemsCount + " item deleted", Toast.LENGTH_SHORT).show();
             } else {
