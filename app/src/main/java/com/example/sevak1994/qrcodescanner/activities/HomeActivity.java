@@ -1,15 +1,20 @@
 package com.example.sevak1994.qrcodescanner.activities;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +40,7 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
 
     private ActionModeListener actionModeListener = this;
 
+    private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     private int[] navItemIds = new int[]{R.id.navigation_home, R.id.navigation_contacts, R.id.navigation_qr_code, R.id.navigation_settings};
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -57,7 +63,7 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
                     return true;
                 case R.id.navigation_qr_scanner:
                     if (!item.isChecked()) {
-                        fragmentManager.startQRScannerFragment(fragmentActivity);
+                        checkForCameraPermission();
                         onClickNavItem(item.getItemId());
                     }
                     return true;
@@ -77,6 +83,32 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
             return false;
         }
     };
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_CAMERA: {
+                if (grantResults.length > 0) {
+                    fragmentManager.startQRScannerFragment(fragmentActivity);
+                } else {
+                    //TODO handle permission denial case
+                }
+                break;
+            }
+        }
+    }
+
+    private void checkForCameraPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
+            }
+        } else {
+            fragmentManager.startQRScannerFragment(fragmentActivity);
+        }
+    }
 
     private void onClickNavItem(int Id) {
         for (int i = 0; i < navItemIds.length; i++) {
