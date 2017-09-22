@@ -85,7 +85,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        final Bitmap bitmap = BitmapUtils.fastblur(resource, 1, 5);
+                        final Bitmap bitmap = BitmapUtils.fastblur(resource, 0.5f, 5);
                         handler.post(new Runnable() {
                             @Override
                             public void run() {

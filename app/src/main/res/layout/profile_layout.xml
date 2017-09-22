@@ -214,8 +214,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
                             android:src="@drawable/ic_call_white_24dp"
                             android:tint="@color/active_icon" />
 
@@ -277,8 +275,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
                             android:src="@drawable/ic_chat_bubble_white_24dp"
                             android:tint="@color/active_icon" />
 
@@ -340,8 +336,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginLeft="15dp"
-                            android:layout_marginRight="15dp"
                             android:src="@drawable/ic_location_on_white_24dp"
                             android:tint="@color/active_icon" />
 
