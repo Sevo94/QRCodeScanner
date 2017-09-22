@@ -1,5 +1,6 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -55,9 +56,11 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.contact_info_done_menu, menu);
+
+        menu.findItem(R.id.done).getIcon().mutate().setColorFilter(getResources().getColor(R.color.toolbar_text_color), PorterDuff.Mode.SRC_ATOP);
+
         super.onCreateOptionsMenu(menu, inflater);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -76,6 +79,4 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
     public void onBackPressed() {
         FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter_from_right, R.anim.exit_to_left);
     }
-
-
 }

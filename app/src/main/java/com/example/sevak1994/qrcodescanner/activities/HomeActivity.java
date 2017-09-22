@@ -115,6 +115,7 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setItemIconTintList(null);
 
+        //onClickNavItem(R.id.navigation_home);
         FragmentManager.getInstance().startHomeFragment(this);
     }
 
