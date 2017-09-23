@@ -101,7 +101,7 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
     private void checkForCameraPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-
+                //TODO handle never ask again case
             } else {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
             }
@@ -128,6 +128,8 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         //Fabric.with(this, new Crashlytics());
 
