@@ -88,7 +88,8 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_margin="4dp"
-                        android:src="@drawable/contact" />
+                        android:src="@drawable/contact"
+                        android:tint="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -109,7 +110,8 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_margin="4dp"
-                        android:src="@drawable/website" />
+                        android:src="@drawable/website"
+                        android:tint="@color/white" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -135,7 +137,8 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_margin="4dp"
-                        android:src="@drawable/social" />
+                        android:src="@drawable/social"
+                        android:tint="@color/white" />
                 </LinearLayout>
 
             </LinearLayout>
