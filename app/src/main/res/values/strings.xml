@@ -25,6 +25,9 @@
     <string name="scan_count">You can scan the cards 30 times, and add them to your contacts</string>
     <string name="pay">for every 30 pieces you have to pay only 1 dollar</string>
     <string name="privacy">Your rights and privacy are protected by BissApp LLC</string>
+    <string name="your_mobile_number">mobile number</string>
+    <string name="your_email_address">email address</string>
+    <string name="your_location">location</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

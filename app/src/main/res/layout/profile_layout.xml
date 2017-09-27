@@ -199,16 +199,17 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="Name"
-                                android:textSize="14dp" />
+                                android:text="@string/your_mobile_number"
+                                android:textSize="11sp" />
 
                             <TextView
                                 android:id="@+id/desc_text_view"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="Address"
-                                android:textSize="10dp" />
+                                android:text="98 346 342"
+                                android:textSize="14sp"
+                                android:visibility="visible" />
 
                         </LinearLayout>
 
@@ -262,15 +263,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="Name"
-                                android:textSize="14dp" />
+                                android:text="@string/your_email_address"
+                                android:textSize="11sp" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="Address"
-                                android:textSize="10dp" />
+                                android:text="sevakprogrammer94@gmail.com"
+                                android:textSize="14sp"
+                                android:visibility="visible" />
 
                         </LinearLayout>
 
@@ -323,15 +325,16 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="Name"
-                                android:textSize="14dp" />
+                                android:text="@string/your_location"
+                                android:textSize="11sp" />
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
-                                android:text="Address"
-                                android:textSize="10dp" />
+                                android:text="Mamikonyants 44/4"
+                                android:textSize="14sp"
+                                android:visibility="visible" />
 
                         </LinearLayout>
 
