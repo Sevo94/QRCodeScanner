@@ -21,10 +21,13 @@
     <string name="item_selected">item selected</string>
     <string name="no_selected_items">no selected items</string>
     <string name="available_cards">Available Cards</string>
-    <string name="coming_soon">Coming Soon</string>
-    <string name="scan_count">You can scan the cards 30 times, and add them to your contacts</string>
-    <string name="pay">for every 30 pieces you have to pay only 1 dollar</string>
-    <string name="privacy">Your rights and privacy are protected by BissApp LLC</string>
+    <string name="coming_soon">COMING SOON</string>
+    <string name="scan_count">You can scan the cards 30 times,and add</string>
+    <string name="scan_count_continue">them to your contacts</string>
+    <string name="pay">for every 30 pieces you have to </string>
+    <string name="pay_continue">pay only 1 dollar</string>
+    <string name="privacy">Your rights and privacy are protected</string>
+    <string name="privacy_continue">by BissApp LLC</string>
     <string name="your_mobile_number">mobile number</string>
     <string name="your_email_address">email address</string>
     <string name="your_location">location</string>

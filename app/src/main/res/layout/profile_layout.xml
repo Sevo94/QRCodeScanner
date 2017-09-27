@@ -155,11 +155,9 @@
         android:orientation="vertical">
 
         <View
-            android:id="@+id/under_line_view"
             android:layout_width="match_parent"
-            android:layout_height="0.6dp"
-            android:background="@color/colorPrimary"
-            android:visibility="visible" />
+            android:layout_height="0.2dp"
+            android:background="@color/nav_view_border_color" />
 
         <LinearLayout
             android:id="@+id/item_layout"
@@ -200,6 +198,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="@string/your_mobile_number"
+                                android:textColor="@color/black"
                                 android:textSize="11sp" />
 
                             <TextView
@@ -208,8 +207,8 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="98 346 342"
+                                android:textColor="@color/black"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:visibility="visible" />
 
                         </LinearLayout>
@@ -265,6 +264,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="@string/your_email_address"
+                                android:textColor="@color/black"
                                 android:textSize="11sp" />
 
                             <TextView
@@ -272,8 +272,8 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="sevakprogrammer94@gmail.com"
+                                android:textColor="@color/black"
                                 android:textSize="14sp"
-                                android:textStyle="bold"
                                 android:visibility="visible" />
 
                         </LinearLayout>
@@ -328,6 +328,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="@string/your_location"
+                                android:textColor="@color/black"
                                 android:textSize="11sp" />
 
                             <TextView
@@ -335,7 +336,7 @@
                                 android:layout_height="wrap_content"
                                 android:gravity="center_vertical"
                                 android:text="Mamikonyants 44/4"
-                                android:textStyle="bold"
+                                android:textColor="@color/black"
                                 android:textSize="14sp"
                                 android:visibility="visible" />
 
