@@ -70,6 +70,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/balance_btn_shape"
             android:text="$1" />
 
         <TextView

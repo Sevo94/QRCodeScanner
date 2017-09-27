@@ -19,4 +19,5 @@
     <color name="contact_item_color2">#FBFBFB</color>
     <color name="contact_name">#2a2929</color>
     <color name="contact_work">#747474</color>
+    <color name="balance_btn_color">#45e078</color>
 </resources>
