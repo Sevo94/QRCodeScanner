@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 
 /**
@@ -50,7 +51,7 @@ public class ContactInfoFragment extends Fragment implements BackKeyListener {
         if (((AppCompatActivity) activity).getSupportActionBar() != null) {
             ((AppCompatActivity) activity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        activity.setTitle(getResources().getString(R.string.personal_info));
+        ((HomeActivity) activity).setToolbarTitle(getResources().getString(R.string.personal_info));
     }
 
     @Override

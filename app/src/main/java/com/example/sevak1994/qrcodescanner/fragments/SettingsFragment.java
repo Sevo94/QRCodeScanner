@@ -3,6 +3,7 @@ package com.example.sevak1994.qrcodescanner.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private View fragmentRootView;
     private HomeActivity activity;
     private LinearLayout contactInfo;
+    private LinearLayout balanceInfo;
 
     public SettingsFragment() {
     }
@@ -49,15 +51,20 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
             case R.id.contact_info:
                 FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter_from_left, R.anim.exit_to_right);
                 break;
+            case R.id.balance_info:
+                FragmentManager.getInstance().startBalanceFragment(activity, R.anim.enter_from_left, R.anim.exit_to_right);
+                break;
         }
     }
 
     private void initFragmentUI() {
         contactInfo = fragmentRootView.findViewById(R.id.contact_info);
+        balanceInfo = fragmentRootView.findViewById(R.id.balance_info);
         setOnClickListener();
     }
 
     private void setOnClickListener() {
         contactInfo.setOnClickListener(this);
+        balanceInfo.setOnClickListener(this);
     }
 }
