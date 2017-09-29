@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -15,6 +16,7 @@ import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
+import com.example.sevak1994.qrcodescanner.helper.BottomNavigationViewHelper;
 import com.example.sevak1994.qrcodescanner.interfaces.ItemClickListener;
 import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
 
@@ -30,6 +32,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
         private ImageView blurProPicture;
         private ImageView profileIV;
         private ImageView closeIV;
+        private ImageView companyLogo;
         private TextView nameTV;
         private TextView jobTV;
 
@@ -38,6 +41,7 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
             blurProPicture = itemView.findViewById(R.id.blur_pro_pic);
             profileIV = itemView.findViewById(R.id.profile_image);
             closeIV = itemView.findViewById(R.id.profile_close_iv);
+            companyLogo = itemView.findViewById(R.id.company_logo);
             nameTV = itemView.findViewById(R.id.name_tv);
             jobTV = itemView.findViewById(R.id.job_tv);
         }
@@ -75,6 +79,15 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
         holder.nameTV.setText(contactInfoModel.getName());
         holder.jobTV.setText(contactInfoModel.getJob());
         holder.closeIV.setVisibility(View.VISIBLE);
+        holder.companyLogo.setColorFilter(mContext.getResources().getColor(R.color.toolbar_text_color));
+
+        int inPixel = BottomNavigationViewHelper.convertDpToPixel(86, mContext);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        params.height = inPixel;
+        params.width = inPixel;
+        holder.profileIV.setLayoutParams(params);
 
         SimpleTarget simpleTarget = new SimpleTarget<Bitmap>() {
             @Override

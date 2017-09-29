@@ -157,7 +157,7 @@
             android:id="@+id/company_logo"
             android:layout_width="69dp"
             android:layout_height="wrap_content"
-            android:src="@drawable/logo_btn"
+            android:src="@drawable/gg_logo_light"
             app:civ_border_color="@color/white" />
 
         <TextView

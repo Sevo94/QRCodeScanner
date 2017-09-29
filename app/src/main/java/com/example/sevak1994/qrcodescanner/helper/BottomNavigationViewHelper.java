@@ -61,7 +61,7 @@ public class BottomNavigationViewHelper {
         }
     }
 
-    private static int convertDpToPixel(int dp, Context context) {
+    public static int convertDpToPixel(int dp, Context context) {
         int pixel;
         Resources r = context.getResources();
         pixel = (int) TypedValue.applyDimension(

@@ -19,6 +19,8 @@ import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 /**
  * Created by Admin on 9/7/2017.
  */
@@ -28,6 +30,7 @@ public class HomeFragment extends Fragment {
     private View fragmentRootView;
 
     private ImageView blurProfilePicture;
+    private CircleImageView companyLogo;
 
     public HomeFragment() {
     }
@@ -78,5 +81,8 @@ public class HomeFragment extends Fragment {
 
     private void initFragmentUi() {
         blurProfilePicture = fragmentRootView.findViewById(R.id.blur_pro_pic);
+        companyLogo = fragmentRootView.findViewById(R.id.company_logo);
+
+        companyLogo.setColorFilter(getActivity().getResources().getColor(R.color.toolbar_text_color));
     }
 }
