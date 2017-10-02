@@ -244,7 +244,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_call_white_24dp"
-                            android:tint="@color/active_icon" />
+                            android:tint="@color/inactive_icon" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -308,7 +308,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_chat_bubble_white_24dp"
-                            android:tint="@color/active_icon" />
+                            android:tint="@color/inactive_icon" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -372,7 +372,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_location_on_white_24dp"
-                            android:tint="@color/active_icon" />
+                            android:tint="@color/inactive_icon" />
 
                     </LinearLayout>
                 </LinearLayout>

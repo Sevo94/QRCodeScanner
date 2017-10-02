@@ -187,7 +187,7 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         isInActionMode = true;
         toolbar.inflateMenu(R.menu.menu_action_mode);
 
-        toolbar.getMenu().findItem(R.id.delete).getIcon().mutate().setColorFilter(getResources().getColor(R.color.toolbar_text_color), PorterDuff.Mode.SRC_ATOP);
+        //toolbar.getMenu().findItem(R.id.delete).getIcon().mutate().setColorFilter(getResources().getColor(R.color.toolbar_text_color), PorterDuff.Mode.SRC_ATOP);
 
         counterTV.setText(getResources().getString(R.string.items_selected));
         counterTV.setVisibility(View.VISIBLE);
