@@ -17,6 +17,7 @@ import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.sevak1994.qrcodescanner.LooperThread;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.adapters.ContactListAdapter;
@@ -47,6 +48,8 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
     private RecyclerView profilesListView;
     private ProfileListAdapter profileListAdapter;
 
+    private LooperThread looperThread;
+
     public ContactsFragment() {
     }
 
@@ -54,6 +57,9 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        looperThread = new LooperThread("LooperThread");
+        looperThread.start();
     }
 
     @Nullable
@@ -107,7 +113,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
         profilesListView.setLayoutManager(linearLayoutManager);
         profilesListView.setHasFixedSize(true);
 
-        profileListAdapter = new ProfileListAdapter(activity, contactInfoModelList, this);
+        profileListAdapter = new ProfileListAdapter(activity, contactInfoModelList, this, looperThread);
         profilesListView.setAdapter(profileListAdapter);
 
         snapHelper.attachToRecyclerView(profilesListView);
@@ -244,5 +250,12 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
         profileListAdapter.notifyDataSetChanged();
 
         inNormalMode(true);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+
+        looperThread.nonUIHandler.getLooper().quit();
     }
 }

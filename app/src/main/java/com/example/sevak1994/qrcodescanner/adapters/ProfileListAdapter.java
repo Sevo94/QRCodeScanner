@@ -2,7 +2,6 @@ package com.example.sevak1994.qrcodescanner.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +13,14 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.example.sevak1994.qrcodescanner.LooperThread;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
 import com.example.sevak1994.qrcodescanner.helper.BottomNavigationViewHelper;
 import com.example.sevak1994.qrcodescanner.interfaces.ItemClickListener;
 import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -28,7 +29,7 @@ import java.util.List;
 
 public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.ProfilesViewHolder> {
 
-    public static class ProfilesViewHolder extends RecyclerView.ViewHolder {
+    public static class ProfilesViewHolder extends RecyclerView.ViewHolder implements Serializable {
         private ImageView blurProPicture;
         private ImageView profileIV;
         private ImageView closeIV;
@@ -50,11 +51,13 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
     private Context mContext;
     private List<ContactInfoModel> contactInfoModelList;
     private ItemClickListener itemClickListener;
+    private LooperThread looperThread;
 
-    public ProfileListAdapter(Context mContext, List<ContactInfoModel> contactInfoModelList, ItemClickListener itemClickListener) {
+    public ProfileListAdapter(Context mContext, List<ContactInfoModel> contactInfoModelList, ItemClickListener itemClickListener, LooperThread looperThread) {
         this.mContext = mContext;
         this.contactInfoModelList = contactInfoModelList;
         this.itemClickListener = itemClickListener;
+        this.looperThread = looperThread;
     }
 
     @Override
@@ -94,19 +97,22 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
             public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                 holder.profileIV.setImageBitmap(resource);
 
-                final Handler handler = new Handler();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        final Bitmap bitmap = BitmapUtils.fastblur(resource, 0.5f, 5);
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                holder.blurProPicture.setImageBitmap(bitmap);
+                if (looperThread.nonUIHandler != null) {
+                    looperThread.nonUIHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            final Bitmap bitmap = BitmapUtils.fastblur(resource, 0.5f, 5);
+                            if (looperThread.UIHandler != null) {
+                                looperThread.UIHandler.post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        holder.blurProPicture.setImageBitmap(bitmap);
+                                    }
+                                });
                             }
-                        });
-                    }
-                }).start();
+                        }
+                    });
+                }
             }
         };
 
@@ -117,8 +123,6 @@ public class ProfileListAdapter extends RecyclerView.Adapter<ProfileListAdapter.
                 .dontAnimate()
                 .placeholder(R.drawable.default_photo)
                 .into(simpleTarget);
-
-
     }
 
     @Override
