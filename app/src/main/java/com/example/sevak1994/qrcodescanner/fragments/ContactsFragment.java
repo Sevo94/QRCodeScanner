@@ -15,6 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.AnticipateInterpolator;
+import android.view.animation.AnticipateOvershootInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
 import com.example.sevak1994.qrcodescanner.LooperThread;
@@ -138,6 +142,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
         float finalRadius = (float) Math.hypot(cx, cy);
 
         Animator anim = ViewAnimationUtils.createCircularReveal(profilesListView, cx, cy, 0, finalRadius);
+        anim.setInterpolator(new AnticipateOvershootInterpolator(0.5f));
 
         profilesListView.setVisibility(View.VISIBLE);
         anim.setDuration(300).start();
