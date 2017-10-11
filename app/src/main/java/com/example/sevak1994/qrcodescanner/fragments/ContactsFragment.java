@@ -2,6 +2,8 @@ package com.example.sevak1994.qrcodescanner.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +13,8 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
@@ -21,12 +25,14 @@ import android.view.animation.AnticipateOvershootInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Toast;
 
+import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.LooperThread;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.adapters.ContactListAdapter;
 import com.example.sevak1994.qrcodescanner.adapters.ProfileListAdapter;
 import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
+import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 import com.example.sevak1994.qrcodescanner.interfaces.ItemClickListener;
 import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
 
@@ -38,7 +44,7 @@ import java.util.List;
  * Created by Admin on 9/7/2017.
  */
 
-public class ContactsFragment extends Fragment implements ActionModeListener, ItemClickListener {
+public class ContactsFragment extends Fragment implements ActionModeListener, ItemClickListener, BackKeyListener {
 
     private View fragmentRootView;
     private HomeActivity activity;
@@ -81,6 +87,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
 
         activity.inNormalMode(false);
         activity.setToolbarTitle(getResources().getString(R.string.title_contacts));
+        activity.setBackKeyListener(this);
 
         initRecyclerView();
         initProfilesListView();
@@ -255,6 +262,13 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
         profileListAdapter.notifyDataSetChanged();
 
         inNormalMode(true);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (profilesListView.getVisibility() == View.VISIBLE) {
+            profilesListView.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

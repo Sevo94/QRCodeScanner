@@ -3,6 +3,7 @@ package com.example.sevak1994.qrcodescanner.activities;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -148,7 +149,7 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setItemIconTintList(null);
 
-        //onClickNavItem(R.id.navigation_home);
+        onClickNavItem(R.id.navigation_home);
         FragmentManager.getInstance().startHomeFragment(this);
     }
 
@@ -187,13 +188,16 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         isInActionMode = true;
         toolbar.inflateMenu(R.menu.menu_action_mode);
 
-        //toolbar.getMenu().findItem(R.id.delete).getIcon().mutate().setColorFilter(getResources().getColor(R.color.toolbar_text_color), PorterDuff.Mode.SRC_ATOP);
-
         counterTV.setText(getResources().getString(R.string.items_selected));
         counterTV.setVisibility(View.VISIBLE);
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            Drawable drawable = toolbar.getNavigationIcon();
+            if (drawable != null) {
+                drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
+            }
         }
         selectedItemsCount = 0;
     }
