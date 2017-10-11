@@ -143,6 +143,15 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
 
         setSupportActionBar(toolbar);
 
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            Drawable drawable = toolbar.getNavigationIcon();
+            if (drawable != null) {
+                drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
+            }
+        }
+
         navigation = (BottomNavigationView) findViewById(R.id.navigation);
         BottomNavigationViewHelper.disableShiftMode(navigation);
         BottomNavigationViewHelper.changeCenterIconSize(navigation, getApplicationContext());
@@ -193,11 +202,6 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-            Drawable drawable = toolbar.getNavigationIcon();
-            if (drawable != null) {
-                drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
-            }
         }
         selectedItemsCount = 0;
     }
