@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 
@@ -150,6 +151,7 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
         if (((AppCompatActivity) activity).getSupportActionBar() != null) {
             ((AppCompatActivity) activity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+        ((HomeActivity) activity).setBackKeyListener(this);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 
 import com.example.sevak1994.qrcodescanner.fragments.BalanceFragment;
+import com.example.sevak1994.qrcodescanner.fragments.CompanyInfoFragment;
 import com.example.sevak1994.qrcodescanner.fragments.ContactInfoEditFragment;
 import com.example.sevak1994.qrcodescanner.fragments.ContactInfoFragment;
 import com.example.sevak1994.qrcodescanner.fragments.ContactsFragment;
@@ -78,6 +79,11 @@ public class FragmentManager {
     public void startBalanceFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
         BalanceFragment balanceFragment = new BalanceFragment();
         startFragmentTransaction(fragmentActivity, balanceFragment, enterAnim, exitAnim);
+    }
+
+    public void startCompanyInfoFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
+        CompanyInfoFragment companyInfoFragment = new CompanyInfoFragment();
+        startFragmentTransaction(fragmentActivity, companyInfoFragment, enterAnim, exitAnim);
     }
 
     public void startContactInfoEditFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
