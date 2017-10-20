@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
+import com.amazonaws.SDKGlobalConfiguration;
 import com.example.sevak1994.qrcodescanner.BissApplication;
 import com.example.sevak1994.qrcodescanner.R;
 
@@ -17,7 +18,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        //((ImageView) findViewById(R.id.app_logo)).setColorFilter(getResources().getColor(R.color.first_page_color), PorterDuff.Mode.SRC_IN);
+        System.setProperty(SDKGlobalConfiguration.ENFORCE_S3_SIGV4_SYSTEM_PROPERTY, "true");
 
         long delay = 0;
 

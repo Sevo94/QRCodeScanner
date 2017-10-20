@@ -1,17 +1,22 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,6 +26,20 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.amazonaws.auth.AWSCredentialsProvider;
+import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
+import com.amazonaws.auth.CognitoCachingCredentialsProvider;
+import com.amazonaws.auth.CognitoCredentialsProvider;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
+import com.amazonaws.regions.Regions;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.model.Region;
+import com.example.sevak1994.qrcodescanner.BissApplication;
+import com.example.sevak1994.qrcodescanner.Constants;
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
@@ -28,9 +47,15 @@ import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 
+import static android.R.attr.bitmap;
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -48,6 +73,7 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
 
     private LinearLayout addPhotoLayout;
     private Bitmap photoBitmap;
+    private Intent data;
 
     public ContactInfoEditFragment() {
     }
@@ -110,6 +136,7 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
                     photoBitmap = null;
 
                     if (data != null) {
+                        this.data = data;
                         try {
                             if (data.getExtras() != null) {
                                 photoBitmap = (Bitmap) data.getExtras().get("data");
@@ -165,7 +192,7 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.done:
-                //TODO make server request
+                uploadImageToAmazonS3();
                 break;
             case android.R.id.home:
                 FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter_from_right, R.anim.exit_to_left);
@@ -177,5 +204,69 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
     @Override
     public void onBackPressed() {
         FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter_from_right, R.anim.exit_to_left);
+    }
+
+    private void uploadImageToAmazonS3() {
+        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
+                getActivity(),
+                Constants.COGNITO_POOL_ID,
+                Regions.EU_CENTRAL_1
+        );
+
+        AmazonS3 s3 = new AmazonS3Client(credentialsProvider);
+        s3.setEndpoint("s3-eu-central-1.amazonaws.com");
+
+        final TransferUtility transferUtility = new TransferUtility(s3, getActivity());
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Uri tempUri = data.getData();
+                final File file = new File(getRealPathFromURI(tempUri));
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        TransferObserver observer = transferUtility.upload(
+                                Constants.BUCKET_NAME,
+                                "sample-key",
+                                file
+                        );
+
+                        observer.setTransferListener(new TransferListener() {
+                            @Override
+                            public void onStateChanged(int id, TransferState state) {
+                                Log.d("Sevag", "stateChanged");
+                            }
+
+                            @Override
+                            public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
+                                Log.d("Sevag", "onProgressChanged");
+                            }
+
+                            @Override
+                            public void onError(int id, Exception ex) {
+                                Log.d("Sevag", ex.toString());
+                            }
+                        });
+
+                    }
+                });
+            }
+        }).start();
+    }
+
+//    public Uri getImageUri(Context inContext, Bitmap inImage) {
+//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+//        return Uri.parse(path);
+//    }
+
+    public String getRealPathFromURI(Uri uri) {
+        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        return cursor.getString(idx);
     }
 }
