@@ -217,8 +217,10 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
                             @Override
                             public void onStateChanged(int id, TransferState state) {
                                 Log.d("Sevag", "stateChanged");
-                                SharedPreferenceHelper.storeStringInPreference(Constants.PROFILE_PATH, observer.getAbsoluteFilePath());
-                                FragmentManager.getInstance().startSettingsFragment(activity);
+                                if (state.name().equals("COMPLETED")) {
+                                    SharedPreferenceHelper.storeStringInPreference(Constants.PROFILE_PATH, observer.getAbsoluteFilePath());
+                                    FragmentManager.getInstance().startSettingsFragment(activity);
+                                }
                             }
 
                             @Override
