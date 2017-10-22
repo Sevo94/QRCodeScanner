@@ -6,11 +6,15 @@ package com.example.sevak1994.qrcodescanner;
 
 public class Constants {
 
-    public static final String COGNITO_POOL_ID = "eu-central-1:0872ebe9-2609-48f5-81b4-bdbe03451dbb";
+    public static final String COGNITO_POOL_ID = "eu-central-1:3a8bcac5-1337-417a-9794-491ae2bafa19";
 
-    public static final String COGNITO_POOL_REGION = "CHANGE_ME";
+    public static final String COGNITO_POOL_REGION = "eu-central-1";
 
     public static final String BUCKET_NAME = "biss-file";
 
-    public static final String BUCKET_REGION = "Frankfurt";
+    public static final String BUCKET_REGION = "eu-central-1";
+
+    public static final String UPLOAD_KEY    = "upload_key";
+
+    public static final String PROFILE_PATH  = "profile_path";
 }

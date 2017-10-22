@@ -8,8 +8,14 @@ import android.app.Application;
 
 public class BissApplication extends Application {
 
-    private static BissApplication instance = new BissApplication();
+    private static BissApplication instance;
     private boolean firstTimeLaunch = true;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        instance = this;
+    }
 
     public static BissApplication getInstance() {
         return instance;

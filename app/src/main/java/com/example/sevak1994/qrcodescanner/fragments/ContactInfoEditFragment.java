@@ -1,6 +1,5 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -8,8 +7,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -26,36 +23,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.amazonaws.auth.AWSCredentialsProvider;
-import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.auth.CognitoCredentialsProvider;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.Region;
-import com.example.sevak1994.qrcodescanner.BissApplication;
+import com.example.sevak1994.qrcodescanner.AWSUtil;
 import com.example.sevak1994.qrcodescanner.Constants;
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
+import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 
-import static android.R.attr.bitmap;
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -207,16 +192,11 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
     }
 
     private void uploadImageToAmazonS3() {
-        CognitoCachingCredentialsProvider credentialsProvider = new CognitoCachingCredentialsProvider(
-                getActivity(),
-                Constants.COGNITO_POOL_ID,
-                Regions.EU_CENTRAL_1
-        );
+        if (data == null) {
+            return;
+        }
 
-        AmazonS3 s3 = new AmazonS3Client(credentialsProvider);
-        s3.setEndpoint("s3-eu-central-1.amazonaws.com");
-
-        final TransferUtility transferUtility = new TransferUtility(s3, getActivity());
+        final TransferUtility transferUtility = AWSUtil.getTransferUtility(getContext());
 
         new Thread(new Runnable() {
             @Override
@@ -227,9 +207,9 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        TransferObserver observer = transferUtility.upload(
+                        final TransferObserver observer = transferUtility.upload(
                                 Constants.BUCKET_NAME,
-                                "sample-key",
+                                Constants.UPLOAD_KEY,
                                 file
                         );
 
@@ -237,6 +217,8 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
                             @Override
                             public void onStateChanged(int id, TransferState state) {
                                 Log.d("Sevag", "stateChanged");
+                                SharedPreferenceHelper.storeStringInPreference(Constants.PROFILE_PATH, observer.getAbsoluteFilePath());
+                                FragmentManager.getInstance().startSettingsFragment(activity);
                             }
 
                             @Override
