@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.sevak1994.qrcodescanner.Constants;
 import com.example.sevak1994.qrcodescanner.GlideWrapper;
 import com.example.sevak1994.qrcodescanner.R;
@@ -24,7 +26,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Admin on 9/7/2017.
  */
 
-public class HomeFragment extends Fragment implements BackKeyListener, GlideWrapper.GlideCallbacks {
+public class HomeFragment extends Fragment implements BackKeyListener {
 
     private View fragmentRootView;
 
@@ -53,27 +55,28 @@ public class HomeFragment extends Fragment implements BackKeyListener, GlideWrap
         activity.setBackKeyListener(this);
         initFragmentUi();
 
-        GlideWrapper glideWrapper = new GlideWrapper(this, false);
-        glideWrapper.loadImageWithGlide(getContext(), SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH));
-    }
-
-    @Override
-    public void onResourceReady(final Bitmap resource) {
-        final Handler handler = new Handler();
-
-        profileImage.setImageBitmap(resource);
-        new Thread(new Runnable() {
+        GlideWrapper glideWrapper = new GlideWrapper(new SimpleTarget<Bitmap>() {
             @Override
-            public void run() {
-                final Bitmap bitmap = BitmapUtils.fastblur(resource, 0.2f, 5);
-                handler.post(new Runnable() {
+            public void onResourceReady(final Bitmap resource, GlideAnimation glideAnimation) {
+                final Handler handler = new Handler();
+
+                profileImage.setImageBitmap(resource);
+                new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        blurProfilePicture.setImageBitmap(bitmap);
+                        final Bitmap bitmap = BitmapUtils.fastblur(resource, 0.2f, 5);
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                blurProfilePicture.setImageBitmap(bitmap);
+                            }
+                        });
                     }
-                });
+                }).start();
             }
-        }).start();
+        }, false);
+
+        glideWrapper.loadImageWithGlide(getContext(), SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH));
     }
 
     private void initFragmentUi() {

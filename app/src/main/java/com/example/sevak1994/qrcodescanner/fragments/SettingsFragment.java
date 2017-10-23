@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.sevak1994.qrcodescanner.Constants;
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.GlideWrapper;
@@ -23,7 +25,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  * Created by Admin on 9/7/2017.
  */
 
-public class SettingsFragment extends Fragment implements View.OnClickListener, BackKeyListener, GlideWrapper.GlideCallbacks {
+public class SettingsFragment extends Fragment implements View.OnClickListener, BackKeyListener {
 
     private View fragmentRootView;
     private HomeActivity activity;
@@ -55,7 +57,12 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         initFragmentUI();
 
         if (!SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH).isEmpty()) {
-            GlideWrapper glideWrapper = new GlideWrapper(this, true);
+            GlideWrapper glideWrapper = new GlideWrapper(new SimpleTarget<Bitmap>() {
+                @Override
+                public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                    profileImage.setImageBitmap(resource);
+                }
+            }, true);
             glideWrapper.loadImageWithGlide(getContext(), SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH));
         }
     }
@@ -87,11 +94,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         contactInfo.setOnClickListener(this);
         balanceInfo.setOnClickListener(this);
         companyInfo.setOnClickListener(this);
-    }
-
-    @Override
-    public void onResourceReady(Bitmap resource) {
-        profileImage.setImageBitmap(resource);
     }
 
     @Override

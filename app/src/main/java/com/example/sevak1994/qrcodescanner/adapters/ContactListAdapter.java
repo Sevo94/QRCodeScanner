@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.example.sevak1994.qrcodescanner.GlideWrapper;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
@@ -92,6 +93,15 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         } else {
             holder.parentLayout.setBackgroundColor(mContext.getResources().getColor(R.color.contact_item_color2));
         }
+
+//        GlideWrapper glideWrapper = new GlideWrapper(new SimpleTarget<Bitmap>() {
+//            @Override
+//            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+//                holder.pictureIV.setImageBitmap(resource);
+//            }
+//        }, true);
+//
+//        glideWrapper.loadImageWithGlide(mContext, String.valueOf(contactInfoModelList.get(position).getImageUrl()));
 
         SimpleTarget simpleTarget = new SimpleTarget<Bitmap>() {
             @Override

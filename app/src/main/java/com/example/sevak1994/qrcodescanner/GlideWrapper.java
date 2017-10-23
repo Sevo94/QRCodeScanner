@@ -13,20 +13,12 @@ import com.bumptech.glide.request.target.SimpleTarget;
 
 public class GlideWrapper {
 
-    private GlideCallbacks glideCallbacks;
     private boolean resizeBitmap;
+    private SimpleTarget simpleTarget;
 
-    private SimpleTarget simpleTarget = new SimpleTarget<Bitmap>() {
-        @Override
-        public void onResourceReady(final Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-            if (glideCallbacks != null) {
-                glideCallbacks.onResourceReady(resource);
-            }
-        }
-    };
 
-    public GlideWrapper(GlideCallbacks glideCallbacks, boolean resizeBitmap) {
-        this.glideCallbacks = glideCallbacks;
+    public GlideWrapper(SimpleTarget simpleTarget, boolean resizeBitmap) {
+        this.simpleTarget = simpleTarget;
         this.resizeBitmap = resizeBitmap;
     }
 
@@ -47,9 +39,5 @@ public class GlideWrapper {
                     .placeholder(R.drawable.default_photo)
                     .into(simpleTarget);
         }
-    }
-
-    public interface GlideCallbacks {
-        void onResourceReady(Bitmap resource);
     }
 }
