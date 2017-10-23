@@ -1,5 +1,6 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -37,6 +38,7 @@ import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -201,7 +203,7 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Uri tempUri = data.getData();
+                Uri tempUri = data.getData();                                                         //getImageUri(getContext(), photoBitmap);
                 final File file = new File(getRealPathFromURI(tempUri));
 
                 getActivity().runOnUiThread(new Runnable() {
@@ -240,12 +242,12 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
         }).start();
     }
 
-//    public Uri getImageUri(Context inContext, Bitmap inImage) {
-//        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-//        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-//        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-//        return Uri.parse(path);
-//    }
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 
     public String getRealPathFromURI(Uri uri) {
         Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);

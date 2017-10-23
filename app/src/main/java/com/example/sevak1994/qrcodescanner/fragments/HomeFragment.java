@@ -53,7 +53,7 @@ public class HomeFragment extends Fragment implements BackKeyListener, GlideWrap
         activity.setBackKeyListener(this);
         initFragmentUi();
 
-        GlideWrapper glideWrapper = new GlideWrapper(this);
+        GlideWrapper glideWrapper = new GlideWrapper(this, false);
         glideWrapper.loadImageWithGlide(getContext(), SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH));
     }
 

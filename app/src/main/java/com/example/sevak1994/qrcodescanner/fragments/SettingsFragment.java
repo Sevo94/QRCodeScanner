@@ -55,7 +55,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         initFragmentUI();
 
         if (!SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH).isEmpty()) {
-            GlideWrapper glideWrapper = new GlideWrapper(this);
+            GlideWrapper glideWrapper = new GlideWrapper(this, true);
             glideWrapper.loadImageWithGlide(getContext(), SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH));
         }
     }
