@@ -3,69 +3,107 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/toolbarColor"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:gravity="center|bottom"
+    android:orientation="vertical"
+    android:weightSum="1">
 
-    <android.support.design.widget.TextInputLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:theme="@style/AuthTextLabel">
+        android:layout_height="0dp"
+        android:layout_weight="0.99"
+        android:gravity="center"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/email_edit_text"
-            android:layout_width="match_parent"
+        <!--<ImageView-->
+        <!--android:layout_width="100dp"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:src="@drawable/btn_logo_white" />-->
+
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="email" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_marginTop="5dp"
+            android:text="@string/biss_card_system"
+            android:textColor="@color/white"
+            android:textSize="11sp" />
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:theme="@style/AuthTextLabel">
+    </LinearLayout>
 
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/password_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="password" />
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:theme="@style/AuthTextLabel">
-
-        <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/confirm_password_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="confirm password" />
-    </android.support.design.widget.TextInputLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/sign_up_btn"
-            android:layout_width="wrap_content"
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign up"
-            android:textAllCaps="false" />
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:theme="@style/AuthTextLabel">
 
-        <Button
-            android:id="@+id/sign_in_btn"
-            android:layout_width="wrap_content"
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/email_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="email"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Sign in"
-            android:textAllCaps="false" />
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:theme="@style/AuthTextLabel">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="password"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:theme="@style/AuthTextLabel">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/confirm_password_edit_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="confirm password"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            android:layout_marginTop="36dp"
+            android:gravity="center">
+
+            <Button
+                android:id="@+id/sign_up_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign up"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/sign_in_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sign in"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
     </LinearLayout>
 </LinearLayout>

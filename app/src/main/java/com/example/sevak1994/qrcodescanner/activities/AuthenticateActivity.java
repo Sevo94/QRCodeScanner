@@ -3,6 +3,7 @@ package com.example.sevak1994.qrcodescanner.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,7 +39,7 @@ public class AuthenticateActivity extends AppCompatActivity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RestRepository.getInstance(BissApplication.getInstance()).UserSignUp("18.194.74.98/signup", "sevakprogrammer94@gmail.com", "Sevak_a26w00_k14", "Sevak_a26w00_k14", new HttpResponse.Listener<Object>() {
+                RestRepository.getInstance(BissApplication.getInstance()).UserSignUp("http://18.194.74.98/signup", "sevakprogrammer94@gmail.com", "Sevak_a26w00_k14", "Sevak_a26w00_k14", new HttpResponse.Listener<Object>() {
                             @Override
                             public void onResponse(Object response, Map<String, String> headers) {
 
@@ -59,6 +60,8 @@ public class AuthenticateActivity extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.password_edit_text);
         confirmPasswordEditText = (EditText) findViewById(R.id.confirm_password_edit_text);
         signUpBtn = (Button) findViewById(R.id.sign_up_btn);
-    }
 
+        passwordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        confirmPasswordEditText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+    }
 }
