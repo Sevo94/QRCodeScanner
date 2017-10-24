@@ -45,4 +45,19 @@ public class RestRepository {
 
         requestQueue.add(httpPostRequest);
     }
+
+    public void UserSignIn(String url, String email, String password, String deviceID,
+                           HttpResponse.Listener<Object> listener,
+                           HttpResponse.ErrorListener errorListener) {
+
+        Gson gson = new Gson();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("email", email);
+        jsonObject.addProperty("password", password);
+        jsonObject.addProperty("deviceId", deviceID);
+
+        HttpPostRequest httpPostRequest = new HttpPostRequest(url, jsonObject.toString(), null, Object.class, gson, listener, errorListener);
+
+        requestQueue.add(httpPostRequest);
+    }
 }
