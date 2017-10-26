@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.example.sevak1994.qrcodescanner.BissApplication;
 import com.example.sevak1994.qrcodescanner.Constants;
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.GlideWrapper;

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.sevak1994.qrcodescanner.BissApplication;
+import com.example.sevak1994.qrcodescanner.Constants;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.fragments.HomeFragment;
 import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
@@ -52,7 +53,7 @@ public class AuthenticateActivity extends AppCompatActivity {
         signUpBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RestRepository.getInstance(BissApplication.getInstance()).UserSignUp("http://18.194.74.98/signup", "sevakprogrammer94@gmail.com", "Sevak_a26w00_k14", "Sevak_a26w00_k14", new HttpResponse.Listener<Object>() {
+                RestRepository.getInstance(BissApplication.getInstance()).UserSignUp(Constants.SIGN_UP, "sevakprogrammer94@gmail.com", "Sevak_a26w00_k14", "Sevak_a26w00_k14", new HttpResponse.Listener<Object>() {
                             @Override
                             public void onResponse(Object response, Map<String, String> headers) {
 
@@ -76,7 +77,7 @@ public class AuthenticateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String deviceID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
-                RestRepository.getInstance(BissApplication.getInstance()).UserSignIn("http://18.194.74.98/login", "sevakprogrammer94@gmail.com", "Sevak_a26w00_k14", deviceID, new HttpResponse.Listener<UserModelRoot>() {
+                RestRepository.getInstance(BissApplication.getInstance()).UserSignIn(Constants.LOG_IN, "sevakprogrammer94@gmail.com", "Sevak_a26w00_k14", deviceID, new HttpResponse.Listener<UserModelRoot>() {
                     @Override
                     public void onResponse(UserModelRoot response, Map<String, String> headers) {
                         Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
