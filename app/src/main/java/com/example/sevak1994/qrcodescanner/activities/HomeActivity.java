@@ -171,25 +171,26 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         this.backKeyListener = backKeyListener;
     }
 
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+    //TODO make proper functionality for back button press
+//    @Override
+//    public boolean onKeyDown(int keyCode, KeyEvent event) {
+//        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+//
+//            if (backKeyListener != null) {
+//                backKeyListener.onBackPressed();
+//            }
+//            return false;
+//        }
+//        return super.onKeyDown(keyCode, event);
+//    }
 
-            if (backKeyListener != null) {
-                backKeyListener.onBackPressed();
-            }
-            return false;
-        }
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        if (backKeyListener != null) {
-            backKeyListener.onBackPressed();
-        }
-    }
+//    @Override
+//    public void onBackPressed() {
+//        super.onBackPressed();
+//        if (backKeyListener != null) {
+//            backKeyListener.onBackPressed();
+//        }
+//    }
 
     @Override
     public void inActionMode() {

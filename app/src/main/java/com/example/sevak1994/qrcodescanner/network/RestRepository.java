@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
+import com.example.sevak1994.qrcodescanner.models.UserModelRoot;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -47,7 +48,7 @@ public class RestRepository {
     }
 
     public void UserSignIn(String url, String email, String password, String deviceID,
-                           HttpResponse.Listener<Object> listener,
+                           HttpResponse.Listener<UserModelRoot> listener,
                            HttpResponse.ErrorListener errorListener) {
 
         Gson gson = new Gson();
@@ -56,7 +57,7 @@ public class RestRepository {
         jsonObject.addProperty("password", password);
         jsonObject.addProperty("deviceId", deviceID);
 
-        HttpPostRequest httpPostRequest = new HttpPostRequest(url, jsonObject.toString(), null, Object.class, gson, listener, errorListener);
+        HttpPostRequest httpPostRequest = new HttpPostRequest(url, jsonObject.toString(), null, UserModelRoot.class, gson, listener, errorListener);
 
         requestQueue.add(httpPostRequest);
     }

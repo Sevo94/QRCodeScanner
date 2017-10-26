@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.amazonaws.SDKGlobalConfiguration;
 import com.example.sevak1994.qrcodescanner.BissApplication;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -18,22 +19,31 @@ public class StartActivity extends AppCompatActivity {
 
         System.setProperty(SDKGlobalConfiguration.ENFORCE_S3_SIGV4_SYSTEM_PROPERTY, "true");
 
-        long delay = 0;
+        //TODO change preference key
+        if (!SharedPreferenceHelper.loadStringFromPreference("signin").isEmpty()) {
+            Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(intent);
+            finish();
 
-        if (BissApplication.getInstance().isFirstTimeLaunch()) {
-            delay = 2000;
-            BissApplication.getInstance().setFirstTimeLaunch(false);
-        }
+        } else {
+            long delay = 0;
 
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(getApplicationContext(), AuthenticateActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-                finish();
+            if (BissApplication.getInstance().isFirstTimeLaunch()) {
+                delay = 2000;
+                BissApplication.getInstance().setFirstTimeLaunch(false);
             }
-        }, delay);
+
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent intent = new Intent(getApplicationContext(), AuthenticateActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    finish();
+                }
+            }, delay);
+        }
     }
 }

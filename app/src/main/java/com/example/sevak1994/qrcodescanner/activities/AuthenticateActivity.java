@@ -1,5 +1,6 @@
 package com.example.sevak1994.qrcodescanner.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
@@ -13,6 +14,9 @@ import android.widget.EditText;
 
 import com.example.sevak1994.qrcodescanner.BissApplication;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.fragments.HomeFragment;
+import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
+import com.example.sevak1994.qrcodescanner.models.UserModelRoot;
 import com.example.sevak1994.qrcodescanner.network.HttpErrorResponse;
 import com.example.sevak1994.qrcodescanner.network.HttpResponse;
 import com.example.sevak1994.qrcodescanner.network.RestRepository;
@@ -72,12 +76,15 @@ public class AuthenticateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String deviceID = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
 
-                RestRepository.getInstance(BissApplication.getInstance()).UserSignIn("http://18.194.74.98/login", "sevakprogrammer94@gmail.com", "Sevak_a26w00_k14", deviceID, new HttpResponse.Listener<Object>() {
+                RestRepository.getInstance(BissApplication.getInstance()).UserSignIn("http://18.194.74.98/login", "sevakprogrammer94@gmail.com", "Sevak_a26w00_k14", deviceID, new HttpResponse.Listener<UserModelRoot>() {
                     @Override
-                    public void onResponse(Object response, Map<String, String> headers) {
-                        signUpBtn.setVisibility(View.GONE);
-                        emailTextLayout.setVisibility(View.VISIBLE);
-                        passwordTextLayout.setVisibility(View.VISIBLE);
+                    public void onResponse(UserModelRoot response, Map<String, String> headers) {
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+                        finish();
+
+                        SharedPreferenceHelper.storeStringInPreference("signin", "ddd");
                     }
                 }, new HttpResponse.ErrorListener() {
                     @Override
