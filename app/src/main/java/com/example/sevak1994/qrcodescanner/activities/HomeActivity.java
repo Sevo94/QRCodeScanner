@@ -23,8 +23,11 @@ import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.helper.BottomNavigationViewHelper;
 import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
+import com.example.sevak1994.qrcodescanner.interfaces.BottomNavigationItemSelect;
 
-public class HomeActivity extends AppCompatActivity implements ActionModeListener {
+import static com.example.sevak1994.qrcodescanner.R.id.navigation_home;
+
+public class HomeActivity extends AppCompatActivity implements ActionModeListener, BottomNavigationItemSelect {
 
     private FragmentManager fragmentManager;
     private FragmentActivity fragmentActivity;
@@ -41,17 +44,16 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
     private ActionModeListener actionModeListener = this;
 
     private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
-    private int[] navItemIds = new int[]{R.id.navigation_home, R.id.navigation_contacts, R.id.navigation_qr_code, R.id.navigation_settings};
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            onClickNavItem(item.getItemId());
+            navItemClicked(item.getItemId());
 
             switch (item.getItemId()) {
-                case R.id.navigation_home:
+                case navigation_home:
                     if (!item.isChecked()) {
                         fragmentManager.startHomeFragment(fragmentActivity);
                     }
@@ -107,26 +109,21 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         }
     }
 
-    private void onClickNavItem(int Id) {
-//        for (int i = 0; i < navItemIds.length; i++) {
-//            if (navItemIds[i] == Id) {
-////                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.active_icon), PorterDuff.Mode.SRC_IN);
-////                navigation.getMenu().findItem(navItemIds[i]).setChecked(true);
-//                navigation.setSelected(true);
-//                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.active_icon), PorterDuff.Mode.SRC_IN);
-//                continue;
-//            }
-//            if (navItemIds[i] != R.id.navigation_qr_code) {
-////                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.inactive_icon), PorterDuff.Mode.SRC_IN);
-////                navigation.getMenu().findItem(navItemIds[i]).setChecked(false);
-//                navigation.setSelected(false);
-//                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.inactive_icon), PorterDuff.Mode.SRC_IN);
-//            }
-//        }
+    private void navItemClicked(int Id) {
         for (int i = 0; i < navigation.getMenu().size(); i++) {
+            if (navigation.getMenu().getItem(i).getItemId() == R.id.navigation_qr_code
+                    || navigation.getMenu().getItem(i).getItemId() == R.id.navigation_qr_scanner) {
+                continue;
+            }
+
             MenuItem menuItem = navigation.getMenu().getItem(i);
             boolean isChecked = menuItem.getItemId() == Id;
-            menuItem.setChecked(isChecked);
+
+            if (isChecked) {
+                navigation.getMenu().findItem(menuItem.getItemId()).getIcon().setColorFilter(getResources().getColor(R.color.active_icon), PorterDuff.Mode.SRC_IN);
+            } else {
+                navigation.getMenu().findItem(menuItem.getItemId()).getIcon().setColorFilter(getResources().getColor(R.color.inactive_icon), PorterDuff.Mode.SRC_IN);
+            }
         }
     }
 
@@ -136,8 +133,6 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         //Fabric.with(this, new Crashlytics());
 
@@ -164,12 +159,10 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         BottomNavigationViewHelper.disableShiftMode(navigation);
         BottomNavigationViewHelper.changeCenterIconSize(navigation, getApplicationContext());
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        selectHomeItem();
         navigation.setItemIconTintList(null);
 
-        navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
-        navigation.getMenu().findItem(R.id.navigation_home).getIcon().setColorFilter(getResources().getColor(R.color.active_icon), PorterDuff.Mode.SRC_IN);
-
-        //onClickNavItem(R.id.navigation_home);
         FragmentManager.getInstance().startHomeFragment(this);
     }
 
@@ -245,4 +238,11 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
     public void lessItemSelected(int position) {
         counterTV.setText(String.valueOf(--selectedItemsCount) + " " + getResources().getString(R.string.item_selected));
     }
+
+    @Override
+    public void selectHomeItem() {
+        navigation.setSelectedItemId(R.id.navigation_home);
+    }
 }
+
+

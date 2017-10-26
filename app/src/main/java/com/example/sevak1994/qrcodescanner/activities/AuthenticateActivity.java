@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 import com.example.sevak1994.qrcodescanner.BissApplication;
 import com.example.sevak1994.qrcodescanner.Constants;
 import com.example.sevak1994.qrcodescanner.R;
-import com.example.sevak1994.qrcodescanner.fragments.HomeFragment;
 import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
 import com.example.sevak1994.qrcodescanner.models.UserModelRoot;
 import com.example.sevak1994.qrcodescanner.network.HttpErrorResponse;
@@ -23,7 +21,6 @@ import com.example.sevak1994.qrcodescanner.network.HttpResponse;
 import com.example.sevak1994.qrcodescanner.network.RestRepository;
 
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Created by Sevak1994 on 10/23/2017.

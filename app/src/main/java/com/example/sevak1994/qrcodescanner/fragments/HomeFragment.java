@@ -1,7 +1,7 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
+import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -12,13 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.amazonaws.mobileconnectors.s3.transfermanager.Transfer;
-import com.amazonaws.mobileconnectors.s3.transfermanager.internal.TransferStateChangeListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
-import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.example.sevak1994.qrcodescanner.AWSUtil;
@@ -29,6 +26,7 @@ import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
 import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
+import com.example.sevak1994.qrcodescanner.interfaces.BottomNavigationItemSelect;
 
 import java.io.File;
 
@@ -41,13 +39,21 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HomeFragment extends Fragment implements BackKeyListener, TransferListener {
 
     private View fragmentRootView;
+    private HomeActivity activity;
 
     private ImageView blurProfilePicture;
     private CircleImageView companyLogo;
     private CircleImageView profileImage;
     private GlideWrapper glideWrapper;
+    private BottomNavigationItemSelect bottomNavigationItemSelect;
 
     public HomeFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        bottomNavigationItemSelect = (HomeActivity) context;
     }
 
     @Nullable
@@ -61,7 +67,7 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        HomeActivity activity = (HomeActivity) getActivity();
+        activity = (HomeActivity) getActivity();
 
         activity.inNormalMode(false);
         activity.setToolbarTitle(getResources().getString(R.string.title_home));
@@ -95,6 +101,14 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
             downloadProfilePicture();
         } else {
             glideWrapper.loadImageWithGlide(getContext(), Constants.PROFILE_PATH + "/test.jpg");
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (bottomNavigationItemSelect != null) {
+            bottomNavigationItemSelect.selectHomeItem();
         }
     }
 
