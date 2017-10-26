@@ -196,25 +196,12 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
         FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter_from_right, R.anim.exit_to_left);
     }
 
-    TransferObserver observer;
-
     private void uploadImageToAmazonS3() {
         if (data == null) {
             return;
         }
 
         final TransferUtility transferUtility = AWSUtil.getTransferUtility(getContext());
-
-//        Uri tempUri = data.getData();
-//        final File file = new File(getRealPathFromURI(tempUri));
-//
-//        observer = transferUtility.upload(
-//                Constants.BUCKET_NAME,
-//                Constants.UPLOAD_KEY,
-//                file
-//        );
-//        observer.setTransferListener(this);
-
 
         new Thread(new Runnable() {
             @Override
@@ -236,8 +223,9 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
                             public void onStateChanged(int id, TransferState state) {
                                 Log.d("Sevag", "stateChanged");
                                 if (state.name().equals("COMPLETED")) {
+                                    SharedPreferenceHelper.storeBooleanInPreference(Constants.USER_LOGIN, false);
                                     SharedPreferenceHelper.storeStringInPreference(Constants.PROFILE_PATH, observer.getAbsoluteFilePath());
-                                    FragmentManager.getInstance().startSettingsFragment(activity);
+                                    //FragmentManager.getInstance().startSettingsFragment(activity);
                                 }
                             }
 

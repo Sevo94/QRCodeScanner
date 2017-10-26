@@ -88,9 +88,12 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
                 }).start();
             }
         }, false);
-        //glideWrapper.loadImageWithGlide(getContext(), SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH));
 
-        downloadImage();
+        if (!SharedPreferenceHelper.loadBooleanFromPreference(Constants.USER_LOGIN, false)) {
+            downloadProfilePicture();
+        } else {
+            glideWrapper.loadImageWithGlide(getContext(), Constants.PROFILE_PATH + "/test.jpg");
+        }
     }
 
     private void initFragmentUi() {
@@ -101,9 +104,9 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
         companyLogo.setColorFilter(getActivity().getResources().getColor(R.color.toolbar_text_color));
     }
 
-    private void downloadImage() {
+    private void downloadProfilePicture() {
         TransferUtility transferUtility = AWSUtil.getTransferUtility(getContext());
-        File file = new File("data/data/com.example.sevak1994.qrcodescanner", "test.jpg");
+        File file = new File(Constants.PROFILE_PATH, "test.jpg");
 
         TransferObserver observer = transferUtility.download(
                 Constants.BUCKET_NAME,
@@ -118,7 +121,8 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
     public void onStateChanged(int id, TransferState state) {
         Log.d("Sevag", "onStateChanged");
         if (state.name().equals("COMPLETED")) {
-            glideWrapper.loadImageWithGlide(getContext(), "data/data/com.example.sevak1994.qrcodescanner/test.jpg");
+            glideWrapper.loadImageWithGlide(getContext(), Constants.PROFILE_PATH + "/test.jpg");
+            SharedPreferenceHelper.storeBooleanInPreference(Constants.USER_LOGIN, true);
         }
     }
 

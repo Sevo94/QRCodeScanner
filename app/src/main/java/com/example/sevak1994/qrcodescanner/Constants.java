@@ -16,7 +16,10 @@ public class Constants {
 
     public static final String UPLOAD_KEY          = "upload_key";
 
-    public static final String PROFILE_PATH        = "profile_path";
+    public static final String PROFILE_PATH        = "data/data/com.example.sevak1994.qrcodescanner";
+
+    public static final String USER_LOGIN          = "user_login";
+
 
     //API END POINTS
     public static final String AUTHENTICATE_URL    = "http://18.194.74.98";

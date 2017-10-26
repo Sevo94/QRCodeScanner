@@ -2,6 +2,8 @@ package com.example.sevak1994.qrcodescanner.adapters;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.SystemClock;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +14,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferState;
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.signature.StringSignature;
+import com.example.sevak1994.qrcodescanner.AWSUtil;
+import com.example.sevak1994.qrcodescanner.Constants;
 import com.example.sevak1994.qrcodescanner.GlideWrapper;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
@@ -22,6 +31,7 @@ import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
 import com.example.sevak1994.qrcodescanner.interfaces.ItemClickListener;
 import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -115,6 +125,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 .asBitmap()
                 .override(300, 200)
                 .dontAnimate()
+                .signature(new StringSignature(String.valueOf(SystemClock.currentThreadTimeMillis())))
                 .placeholder(R.drawable.default_photo)
                 .into(simpleTarget);
 
@@ -137,6 +148,10 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
                 }
             }
         });
+    }
+
+    private void downloadProfilePicture() {
+
     }
 
     @Override
