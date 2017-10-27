@@ -48,35 +48,32 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            onClickNavItem(item.getItemId());
+
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     if (!item.isChecked()) {
                         fragmentManager.startHomeFragment(fragmentActivity);
-                        onClickNavItem(item.getItemId());
                     }
                     return true;
                 case R.id.navigation_contacts:
                     if (!item.isChecked()) {
                         fragmentManager.startContactsFragment(fragmentActivity, actionModeListener);
-                        onClickNavItem(item.getItemId());
                     }
                     return true;
                 case R.id.navigation_qr_scanner:
                     if (!item.isChecked()) {
                         checkForCameraPermission();
-                        onClickNavItem(item.getItemId());
                     }
                     return true;
                 case R.id.navigation_qr_code:
                     if (!item.isChecked()) {
                         fragmentManager.startQRCodeFragment(fragmentActivity);
-                        onClickNavItem(item.getItemId());
                     }
                     return true;
                 case R.id.navigation_settings:
                     if (!item.isChecked()) {
                         fragmentManager.startSettingsFragment(fragmentActivity);
-                        onClickNavItem(item.getItemId());
                     }
                     return true;
             }
@@ -111,14 +108,25 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
     }
 
     private void onClickNavItem(int Id) {
-        for (int i = 0; i < navItemIds.length; i++) {
-            if (navItemIds[i] == Id && navItemIds[i] != R.id.navigation_qr_code) {
-                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.active_icon), PorterDuff.Mode.SRC_IN);
-                continue;
-            }
-            if (navItemIds[i] != R.id.navigation_qr_code) {
-                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.inactive_icon), PorterDuff.Mode.SRC_IN);
-            }
+//        for (int i = 0; i < navItemIds.length; i++) {
+//            if (navItemIds[i] == Id) {
+////                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.active_icon), PorterDuff.Mode.SRC_IN);
+////                navigation.getMenu().findItem(navItemIds[i]).setChecked(true);
+//                navigation.setSelected(true);
+//                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.active_icon), PorterDuff.Mode.SRC_IN);
+//                continue;
+//            }
+//            if (navItemIds[i] != R.id.navigation_qr_code) {
+////                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.inactive_icon), PorterDuff.Mode.SRC_IN);
+////                navigation.getMenu().findItem(navItemIds[i]).setChecked(false);
+//                navigation.setSelected(false);
+//                navigation.getMenu().findItem(navItemIds[i]).getIcon().setColorFilter(getResources().getColor(R.color.inactive_icon), PorterDuff.Mode.SRC_IN);
+//            }
+//        }
+        for (int i = 0; i < navigation.getMenu().size(); i++) {
+            MenuItem menuItem = navigation.getMenu().getItem(i);
+            boolean isChecked = menuItem.getItemId() == Id;
+            menuItem.setChecked(isChecked);
         }
     }
 
@@ -158,7 +166,10 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.setItemIconTintList(null);
 
-        onClickNavItem(R.id.navigation_home);
+        navigation.getMenu().findItem(R.id.navigation_home).setChecked(true);
+        navigation.getMenu().findItem(R.id.navigation_home).getIcon().setColorFilter(getResources().getColor(R.color.active_icon), PorterDuff.Mode.SRC_IN);
+
+        //onClickNavItem(R.id.navigation_home);
         FragmentManager.getInstance().startHomeFragment(this);
     }
 
