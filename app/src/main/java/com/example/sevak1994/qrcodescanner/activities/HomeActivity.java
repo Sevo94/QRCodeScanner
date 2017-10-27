@@ -112,8 +112,7 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
 
     private void navItemClicked(int Id) {
         for (int i = 0; i < navigation.getMenu().size(); i++) {
-            if (navigation.getMenu().getItem(i).getItemId() == R.id.navigation_qr_code
-                    || navigation.getMenu().getItem(i).getItemId() == R.id.navigation_qr_scanner) {
+            if (navigation.getMenu().getItem(i).getItemId() == R.id.navigation_qr_scanner) {
                 continue;
             }
 
