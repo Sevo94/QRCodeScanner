@@ -11,8 +11,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.sevak1994.qrcodescanner.CustomZXIngScannerView;
+import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.core.IViewFinder;
@@ -22,7 +24,7 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
  * Created by Admin on 9/7/2017.
  */
 
-public class QRScannerFragment extends Fragment implements ZXingScannerView.ResultHandler {
+public class QRScannerFragment extends Fragment implements ZXingScannerView.ResultHandler, BackKeyListener {
 
     private View fragmentRootView;
     private HomeActivity activity;
@@ -49,6 +51,8 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
         activity = (HomeActivity) getActivity();
         activity.inNormalMode(false);
         activity.setToolbarTitle(getResources().getString(R.string.title_qr_scanner));
+
+        activity.setBackKeyListener(this);
 
         customZXingScannerView = new CustomZXIngScannerView(getContext());
         customZXingScannerView.setBorderColor(getResources().getColor(R.color.white));
@@ -82,5 +86,10 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
             Toast.makeText(activity, "Scanned " + result.getText(), Toast.LENGTH_SHORT).show();
             scannerView.resumeCameraPreview(this);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager.getInstance().startHomeFragment(activity);
     }
 }

@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -22,7 +24,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
  * Created by Admin on 9/7/2017.
  */
 
-public class QRCodeFragment extends Fragment {
+public class QRCodeFragment extends Fragment implements BackKeyListener {
 
     private ImageView qrCodeIV;
     private HomeActivity activity;
@@ -46,6 +48,8 @@ public class QRCodeFragment extends Fragment {
         activity = (HomeActivity) getActivity();
         activity.inNormalMode(false);
         activity.setToolbarTitle(getResources().getString(R.string.title_qr_code));
+
+        activity.setBackKeyListener(this);
 
         final Handler handler = new Handler();
 
@@ -82,5 +86,10 @@ public class QRCodeFragment extends Fragment {
 
         BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
         return barcodeEncoder.createBitmap(bitMatrix);
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager.getInstance().startHomeFragment(activity);
     }
 }

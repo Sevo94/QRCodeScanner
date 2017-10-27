@@ -150,10 +150,6 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         });
     }
 
-    private void downloadProfilePicture() {
-
-    }
-
     @Override
     public int getItemCount() {
         return contactInfoModelList.size();

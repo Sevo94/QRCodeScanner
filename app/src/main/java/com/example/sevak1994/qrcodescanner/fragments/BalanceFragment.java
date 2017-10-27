@@ -20,9 +20,10 @@ import android.view.ViewGroup;
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
+import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 
 
-public class BalanceFragment extends Fragment {
+public class BalanceFragment extends Fragment implements BackKeyListener {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -71,6 +72,7 @@ public class BalanceFragment extends Fragment {
             ((AppCompatActivity) activity).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         ((HomeActivity) activity).setToolbarTitle(getResources().getString(R.string.balance));
+        ((HomeActivity) activity).setBackKeyListener(this);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -101,6 +103,11 @@ public class BalanceFragment extends Fragment {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager.getInstance().startSettingsFragment(activity);
     }
 
     public interface OnFragmentInteractionListener {

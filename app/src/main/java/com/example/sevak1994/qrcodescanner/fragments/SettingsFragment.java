@@ -99,6 +99,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onBackPressed() {
-
+        FragmentManager.getInstance().startHomeFragment(activity);
     }
 }

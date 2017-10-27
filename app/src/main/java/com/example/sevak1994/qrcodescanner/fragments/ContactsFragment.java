@@ -89,6 +89,8 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
         activity.setToolbarTitle(getResources().getString(R.string.title_contacts));
         activity.setBackKeyListener(this);
 
+        activity.setBackKeyListener(this);
+
         initRecyclerView();
         initProfilesListView();
     }
@@ -268,6 +270,8 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
     public void onBackPressed() {
         if (profilesListView.getVisibility() == View.VISIBLE) {
             profilesListView.setVisibility(View.INVISIBLE);
+        } else {
+            FragmentManager.getInstance().startHomeFragment(activity);
         }
     }
 

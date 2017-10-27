@@ -68,6 +68,8 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
         activity.setBackKeyListener(this);
         initFragmentUi();
 
+        activity.setBackKeyListener(this);
+
         glideWrapper = new GlideWrapper(new SimpleTarget<Bitmap>() {
             @Override
             public void onResourceReady(final Bitmap resource, GlideAnimation glideAnimation) {
@@ -138,6 +140,6 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
 
     @Override
     public void onBackPressed() {
-
+        getActivity().finish();
     }
 }
