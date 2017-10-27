@@ -139,6 +139,7 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
         if (state.name().equals("COMPLETED")) {
             glideWrapper.loadImageWithGlide(getContext(), Constants.PROFILE_PATH + "/test.jpg");
             SharedPreferenceHelper.storeBooleanInPreference(Constants.USER_LOGIN, true);
+            SharedPreferenceHelper.storeStringInPreference(Constants.PROFILE_PATH + "/test.jpg", null);
         }
     }
 

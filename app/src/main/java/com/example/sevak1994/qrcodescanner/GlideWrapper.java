@@ -28,6 +28,7 @@ public class GlideWrapper {
                         .asBitmap()
                         .dontAnimate()
                         .override(300, 200)
+                        .signature(new StringSignature(String.valueOf(SystemClock.currentThreadTimeMillis())))
                         .placeholder(R.drawable.default_photo)
                         .into(simpleTarget);
             } else {

@@ -20,6 +20,8 @@ import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 
+import java.io.File;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
@@ -57,14 +59,17 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
         activity.setBackKeyListener(this);
         initFragmentUI();
 
+        GlideWrapper glideWrapper = new GlideWrapper(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
+                profileImage.setImageBitmap(resource);
+            }
+        }, true);
+
         if (!SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH).isEmpty()) {
-            GlideWrapper glideWrapper = new GlideWrapper(new SimpleTarget<Bitmap>() {
-                @Override
-                public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
-                    profileImage.setImageBitmap(resource);
-                }
-            }, true);
             glideWrapper.loadImageWithGlide(getContext(), SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH));
+        } else {
+            glideWrapper.loadImageWithGlide(getContext(), Constants.PROFILE_PATH + "/test.jpg");
         }
     }
 
