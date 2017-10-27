@@ -87,10 +87,11 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CAMERA: {
-                if (grantResults.length > 0) {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     fragmentManager.startQRScannerFragment(fragmentActivity);
                 } else {
                     //TODO handle permission denial case
+                    //selectHomeItem();
                 }
                 break;
             }
