@@ -1,6 +1,5 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,7 +25,6 @@ import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
 import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
-import com.example.sevak1994.qrcodescanner.interfaces.BottomNavigationItemSelect;
 
 import java.io.File;
 
@@ -76,6 +74,7 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
                 final Handler handler = new Handler();
 
                 profileImage.setImageBitmap(resource);
+                //blurProfilePicture.setImageBitmap(resource);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {

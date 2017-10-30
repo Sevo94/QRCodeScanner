@@ -1,6 +1,5 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,6 +12,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -39,22 +39,23 @@ import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 
 import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 /**
  * Created by Sevak1994 on 9/17/2017.
  */
 
-public class ContactInfoEditFragment extends Fragment implements BackKeyListener, View.OnClickListener {
+public class ContactInfoEditFragment extends Fragment implements BackKeyListener, View.OnClickListener, TransferListener {
 
-    private static final int REQUEST_IMAGE_CAR_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_FROM_GALLERY = 2;
     private static final int FROM_GALLERY = 0;
     private static final int FROM_CAMERA = 1;
 
@@ -64,6 +65,9 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
     private LinearLayout addPhotoLayout;
     private Bitmap photoBitmap;
     private Intent data;
+
+    private TransferObserver observer;
+    private String mCurrentPhotoPath;
 
     public ContactInfoEditFragment() {
     }
@@ -105,11 +109,10 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
                     case FROM_GALLERY:
                         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
                         intent.setType("image/*");
-                        startActivityForResult(intent, REQUEST_IMAGE_CAR_CAPTURE);
+                        startActivityForResult(intent, REQUEST_IMAGE_FROM_GALLERY);
                         break;
                     case FROM_CAMERA:
-                        Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                        startActivityForResult(cameraIntent, REQUEST_IMAGE_CAR_CAPTURE);
+                        takeAPictureFromCamera();
                         break;
                 }
             }
@@ -122,7 +125,7 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
-                case REQUEST_IMAGE_CAR_CAPTURE:
+                case REQUEST_IMAGE_FROM_GALLERY:
                     photoBitmap = null;
 
                     if (data != null) {
@@ -155,8 +158,69 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
                         }
                     }
                     break;
+                case REQUEST_IMAGE_CAPTURE:
+                    if (data != null && data.getExtras() != null) {
+                        photoBitmap = (Bitmap) data.getExtras().get("data");
+                    }
+                    ((ImageView) fragmentRootView.findViewById(R.id.profile_image)).setImageBitmap(photoBitmap);
+                    break;
+            }
+        } else if (resultCode == RESULT_CANCELED) {
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
+                mCurrentPhotoPath = null;
+            } else {
+                this.data = null;
             }
         }
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp;
+
+        timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,
+                ".jpg",
+                storageDir
+        );
+
+
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void takeAPictureFromCamera() {
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (cameraIntent.resolveActivity(activity.getPackageManager()) != null) {
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+
+            }
+
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(activity, "com.example.android.fileProvider", photoFile);
+                cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(cameraIntent, REQUEST_IMAGE_CAPTURE);
+            }
+        }
+    }
+
+    private void uploadImage(String path) {
+        final TransferUtility transferUtility = AWSUtil.getTransferUtility(getContext());
+        final File file = new File(path);
+
+        observer = transferUtility.upload(
+                Constants.BUCKET_NAME,
+                Constants.UPLOAD_KEY,
+                file
+        );
+
+        observer.setTransferListener(this);
     }
 
 
@@ -182,7 +246,11 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.done:
-                uploadImageToAmazonS3();
+                if (data != null) {
+                    uploadFromGallery();
+                } else if (mCurrentPhotoPath != null) {
+                    uploadFromCamera();
+                }
                 break;
             case android.R.id.home:
                 FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter_from_right, R.anim.exit_to_left);
@@ -196,61 +264,51 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
         FragmentManager.getInstance().startContactInfoFragment(activity, R.anim.enter_from_right, R.anim.exit_to_left);
     }
 
-    private void uploadImageToAmazonS3() {
+    private void uploadFromCamera() {
+        uploadImage(mCurrentPhotoPath);
+    }
+
+    private void uploadFromGallery() {
         if (data == null) {
             return;
         }
 
-        final TransferUtility transferUtility = AWSUtil.getTransferUtility(getContext());
-
         new Thread(new Runnable() {
             @Override
             public void run() {
-                Uri tempUri = data.getData();                                                         //getImageUri(getContext(), photoBitmap);
+                Uri tempUri = data.getData();
                 final File file = new File(getRealPathFromURI(tempUri));
 
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        final TransferObserver observer = transferUtility.upload(
-                                Constants.BUCKET_NAME,
-                                Constants.UPLOAD_KEY,
-                                file
-                        );
-
-                        observer.setTransferListener(new TransferListener() {
-                            @Override
-                            public void onStateChanged(int id, TransferState state) {
-                                Log.d("Sevag", "stateChanged");
-                                if (state.name().equals("COMPLETED")) {
-                                    SharedPreferenceHelper.storeBooleanInPreference(Constants.USER_LOGIN, false);
-                                    SharedPreferenceHelper.storeStringInPreference(Constants.PROFILE_PATH, observer.getAbsoluteFilePath());
-                                    //FragmentManager.getInstance().startSettingsFragment(activity);
-                                }
-                            }
-
-                            @Override
-                            public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
-                                Log.d("Sevag", "onProgressChanged");
-                            }
-
-                            @Override
-                            public void onError(int id, Exception ex) {
-                                Log.d("Sevag", ex.toString());
-                            }
-                        });
-
+                        uploadImage(file.getAbsolutePath());
                     }
                 });
             }
         }).start();
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
+    @Override
+    public void onStateChanged(int id, TransferState state) {
+        Log.d("Sevag", "stateChanged");
+        if (state.name().equals("COMPLETED")) {
+            SharedPreferenceHelper.storeBooleanInPreference(Constants.USER_LOGIN, false);
+            SharedPreferenceHelper.storeStringInPreference(Constants.PROFILE_PATH, observer.getAbsoluteFilePath());
+            //FragmentManager.getInstance().startSettingsFragment(activity);
+            mCurrentPhotoPath = null;
+            data = null;
+        }
+    }
+
+    @Override
+    public void onProgressChanged(int id, long bytesCurrent, long bytesTotal) {
+
+    }
+
+    @Override
+    public void onError(int id, Exception ex) {
+
     }
 
     public String getRealPathFromURI(Uri uri) {
