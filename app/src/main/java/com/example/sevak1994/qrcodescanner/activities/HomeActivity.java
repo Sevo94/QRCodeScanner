@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -52,6 +53,11 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             navItemClicked(item.getItemId());
 
+            if (permissionDenied) {
+                permissionDenied = false;
+                return true;
+            }
+
             switch (item.getItemId()) {
                 case navigation_home:
                     if (!item.isChecked()) {
@@ -65,7 +71,11 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
                     return true;
                 case R.id.navigation_qr_scanner:
                     if (!item.isChecked()) {
-                        checkForCameraPermission();
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                            checkForCameraPermission();
+                        } else {
+                            fragmentManager.startQRScannerFragment(fragmentActivity);
+                        }
                     }
                     return true;
                 case R.id.navigation_qr_code:
@@ -83,6 +93,8 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         }
     };
 
+    boolean permissionDenied;
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
@@ -91,7 +103,8 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
                     fragmentManager.startQRScannerFragment(fragmentActivity);
                 } else {
                     //TODO handle permission denial case
-                    //selectHomeItem();
+                    permissionDenied = true;
+                    selectNavigationItem(FragmentManager.getInstance().getLastTransactionFragmentID());
                 }
                 break;
             }
@@ -160,7 +173,7 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         BottomNavigationViewHelper.changeCenterIconSize(navigation, getApplicationContext());
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        selectHomeItem();
+        selectNavigationItem(R.id.navigation_home);
         navigation.setItemIconTintList(null);
 
         FragmentManager.getInstance().startHomeFragment(this);
@@ -175,7 +188,6 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
         this.backKeyListener = backKeyListener;
     }
 
-    //TODO make proper functionality for back button press
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK)) {
@@ -240,8 +252,8 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
     }
 
     @Override
-    public void selectHomeItem() {
-        navigation.setSelectedItemId(R.id.navigation_home);
+    public void selectNavigationItem(int Id) {
+        navigation.setSelectedItemId(Id);
     }
 }
 

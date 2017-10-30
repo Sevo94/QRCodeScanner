@@ -2,6 +2,7 @@ package com.example.sevak1994.qrcodescanner;
 
 import android.content.Context;
 import android.os.SystemClock;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.signature.StringSignature;

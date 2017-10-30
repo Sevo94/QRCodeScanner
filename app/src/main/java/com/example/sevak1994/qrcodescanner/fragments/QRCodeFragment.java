@@ -1,5 +1,6 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
+import com.example.sevak1994.qrcodescanner.interfaces.BottomNavigationItemSelect;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -28,8 +30,15 @@ public class QRCodeFragment extends Fragment implements BackKeyListener {
 
     private ImageView qrCodeIV;
     private HomeActivity activity;
+    private BottomNavigationItemSelect bottomNavigationItemSelect;
 
     public QRCodeFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        bottomNavigationItemSelect = (HomeActivity) context;
     }
 
     @Nullable
@@ -90,6 +99,6 @@ public class QRCodeFragment extends Fragment implements BackKeyListener {
 
     @Override
     public void onBackPressed() {
-        FragmentManager.getInstance().startHomeFragment(activity);
+        bottomNavigationItemSelect.selectNavigationItem(R.id.navigation_home);
     }
 }

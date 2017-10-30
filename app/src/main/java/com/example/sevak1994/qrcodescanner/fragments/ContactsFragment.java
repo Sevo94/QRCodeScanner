@@ -2,6 +2,7 @@ package com.example.sevak1994.qrcodescanner.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.content.Context;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -33,6 +34,7 @@ import com.example.sevak1994.qrcodescanner.adapters.ContactListAdapter;
 import com.example.sevak1994.qrcodescanner.adapters.ProfileListAdapter;
 import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
+import com.example.sevak1994.qrcodescanner.interfaces.BottomNavigationItemSelect;
 import com.example.sevak1994.qrcodescanner.interfaces.ItemClickListener;
 import com.example.sevak1994.qrcodescanner.models.ContactInfoModel;
 
@@ -59,8 +61,15 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
     private ProfileListAdapter profileListAdapter;
 
     private LooperThread looperThread;
+    private BottomNavigationItemSelect bottomNavigationItemSelect;
 
     public ContactsFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        bottomNavigationItemSelect = (HomeActivity) context;
     }
 
     @Override
@@ -271,7 +280,7 @@ public class ContactsFragment extends Fragment implements ActionModeListener, It
         if (profilesListView.getVisibility() == View.VISIBLE) {
             profilesListView.setVisibility(View.INVISIBLE);
         } else {
-            FragmentManager.getInstance().startHomeFragment(activity);
+            bottomNavigationItemSelect.selectNavigationItem(R.id.navigation_home);
         }
     }
 

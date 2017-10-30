@@ -5,5 +5,5 @@ package com.example.sevak1994.qrcodescanner.interfaces;
  */
 
 public interface BottomNavigationItemSelect {
-    void selectHomeItem();
+    void selectNavigationItem(int Id);
 }

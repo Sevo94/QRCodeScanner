@@ -22,6 +22,7 @@ import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
 public class FragmentManager {
 
     private static FragmentManager instance;
+    private int fragmentID;
 
     private FragmentManager() {
     }
@@ -37,36 +38,44 @@ public class FragmentManager {
         return instance;
     }
 
+    public int getLastTransactionFragmentID() {
+        return fragmentID;
+    }
+
     public void startHomeFragment(FragmentActivity fragmentActivity) {
+        fragmentID = R.id.navigation_home;
         HomeFragment homeFragment = new HomeFragment();
         startFragmentTransaction(fragmentActivity, homeFragment);
-
     }
 
     public void startContactsFragment(FragmentActivity fragmentActivity, ActionModeListener actionModeListener) {
+        fragmentID = R.id.navigation_contacts;
         ContactsFragment contactsFragment = new ContactsFragment();
         contactsFragment.setActionModeListener(actionModeListener);
         startFragmentTransaction(fragmentActivity, contactsFragment);
     }
 
     public void startQRScannerFragment(FragmentActivity fragmentActivity) {
+        fragmentID = R.id.navigation_qr_scanner;
         QRScannerFragment qrScannerFragment = new QRScannerFragment();
         startFragmentTransaction(fragmentActivity, qrScannerFragment);
 
     }
 
     public void startQRCodeFragment(FragmentActivity fragmentActivity) {
+        fragmentID = R.id.navigation_qr_code;
         QRCodeFragment qrCodeFragment = new QRCodeFragment();
         startFragmentTransaction(fragmentActivity, qrCodeFragment);
-
     }
 
     public void startSettingsFragment(FragmentActivity fragmentActivity) {
+        fragmentID = R.id.navigation_settings;
         SettingsFragment settingsFragment = new SettingsFragment();
         startFragmentTransaction(fragmentActivity, settingsFragment);
     }
 
     public void startSettingsFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
+        fragmentID = R.id.navigation_settings;
         SettingsFragment settingsFragment = new SettingsFragment();
         startFragmentTransaction(fragmentActivity, settingsFragment, enterAnim, exitAnim);
     }

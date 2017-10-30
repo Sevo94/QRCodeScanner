@@ -1,5 +1,6 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
+import com.example.sevak1994.qrcodescanner.interfaces.BottomNavigationItemSelect;
 
 import java.io.File;
 
@@ -37,8 +39,15 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
     private LinearLayout companyInfo;
 
     private CircleImageView profileImage;
+    private BottomNavigationItemSelect bottomNavigationItemSelect;
 
     public SettingsFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        bottomNavigationItemSelect = (HomeActivity) context;
     }
 
     @Nullable
@@ -104,6 +113,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onBackPressed() {
-        FragmentManager.getInstance().startHomeFragment(activity);
+        bottomNavigationItemSelect.selectNavigationItem(R.id.navigation_home);
     }
 }

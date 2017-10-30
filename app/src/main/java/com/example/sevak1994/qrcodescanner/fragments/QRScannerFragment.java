@@ -15,6 +15,7 @@ import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
+import com.example.sevak1994.qrcodescanner.interfaces.BottomNavigationItemSelect;
 import com.google.zxing.Result;
 
 import me.dm7.barcodescanner.core.IViewFinder;
@@ -31,8 +32,15 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
     private ZXingScannerView scannerView;
     private LinearLayout scannerViewLayout;
     private CustomZXIngScannerView customZXingScannerView;
+    private BottomNavigationItemSelect bottomNavigationItemSelect;
 
     public QRScannerFragment() {
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        bottomNavigationItemSelect = (HomeActivity) context;
     }
 
     @Nullable
@@ -90,6 +98,6 @@ public class QRScannerFragment extends Fragment implements ZXingScannerView.Resu
 
     @Override
     public void onBackPressed() {
-        FragmentManager.getInstance().startHomeFragment(activity);
+        bottomNavigationItemSelect.selectNavigationItem(R.id.navigation_home);
     }
 }

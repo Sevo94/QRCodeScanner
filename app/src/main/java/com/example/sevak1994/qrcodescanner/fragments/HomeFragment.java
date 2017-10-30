@@ -104,13 +104,13 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (bottomNavigationItemSelect != null) {
-            bottomNavigationItemSelect.selectHomeItem();
-        }
-    }
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+////        if (bottomNavigationItemSelect != null) {
+////            bottomNavigationItemSelect.selectHomeItem();
+////        }
+//    }
 
     private void initFragmentUi() {
         blurProfilePicture = fragmentRootView.findViewById(R.id.blur_pro_pic);
