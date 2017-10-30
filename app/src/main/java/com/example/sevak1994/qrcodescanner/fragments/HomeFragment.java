@@ -45,16 +45,10 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
     private CircleImageView companyLogo;
     private CircleImageView profileImage;
     private GlideWrapper glideWrapper;
-    private BottomNavigationItemSelect bottomNavigationItemSelect;
 
     public HomeFragment() {
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        bottomNavigationItemSelect = (HomeActivity) context;
-    }
 
     @Nullable
     @Override
@@ -103,14 +97,6 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
             glideWrapper.loadImageWithGlide(getContext(), Constants.PROFILE_PATH + "/test.jpg");
         }
     }
-
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-////        if (bottomNavigationItemSelect != null) {
-////            bottomNavigationItemSelect.selectHomeItem();
-////        }
-//    }
 
     private void initFragmentUi() {
         blurProfilePicture = fragmentRootView.findViewById(R.id.blur_pro_pic);
