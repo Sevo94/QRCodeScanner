@@ -77,7 +77,7 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        final Bitmap bitmap = BitmapUtils.fastblur(resource, 0.2f, 4);    //5
+                        final Bitmap bitmap = BitmapUtils.fastblur(resource, 0.5f, 5); //0.2   //5
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
                     }
                 }).start();
             }
-        }, false);
+        });
 
         if (!SharedPreferenceHelper.loadBooleanFromPreference(Constants.USER_LOGIN, false)) {
             downloadProfilePicture();

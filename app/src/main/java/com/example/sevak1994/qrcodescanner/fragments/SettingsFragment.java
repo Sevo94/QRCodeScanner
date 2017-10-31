@@ -73,7 +73,7 @@ public class SettingsFragment extends Fragment implements View.OnClickListener, 
             public void onResourceReady(Bitmap resource, GlideAnimation glideAnimation) {
                 profileImage.setImageBitmap(resource);
             }
-        }, true);
+        });
 
         if (!SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH).isEmpty()) {
             glideWrapper.loadImageWithGlide(getContext(), SharedPreferenceHelper.loadStringFromPreference(Constants.PROFILE_PATH));
