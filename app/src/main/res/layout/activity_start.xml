@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/first_page_color"
     android:orientation="vertical"
-    tools:context="com.example.sevak1994.qrcodescanner.activities.StartActivity">
+    tools:context="com.example.sevak1994.qrcodescanner.activities.IntroActivity">
 
     <ImageView
         android:id="@+id/app_logo"

@@ -30,7 +30,7 @@
             android:value="81cda416a47ec15d4fbfc95cdde2255b3e0dce1b" />
 
         <activity
-            android:name=".activities.StartActivity"
+            android:name=".activities.IntroActivity"
             android:screenOrientation="portrait"
             android:theme="@style/StartTheme">
             <intent-filter>
