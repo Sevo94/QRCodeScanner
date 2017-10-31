@@ -22,6 +22,7 @@ import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
 public class FragmentManager {
 
     private static FragmentManager instance;
+    private Fragment mFragment;
     private int fragmentID;
 
     private FragmentManager() {
@@ -38,66 +39,70 @@ public class FragmentManager {
         return instance;
     }
 
+    public Fragment getmFragment() {
+        return mFragment;
+    }
+
     public int getLastTransactionFragmentID() {
         return fragmentID;
     }
 
     public void startHomeFragment(FragmentActivity fragmentActivity) {
         fragmentID = R.id.navigation_home;
-        HomeFragment homeFragment = new HomeFragment();
-        startFragmentTransaction(fragmentActivity, homeFragment);
+        mFragment = new HomeFragment();
+        startFragmentTransaction(fragmentActivity, mFragment);
     }
 
     public void startContactsFragment(FragmentActivity fragmentActivity, ActionModeListener actionModeListener) {
         fragmentID = R.id.navigation_contacts;
-        ContactsFragment contactsFragment = new ContactsFragment();
-        contactsFragment.setActionModeListener(actionModeListener);
-        startFragmentTransaction(fragmentActivity, contactsFragment);
+        mFragment = new ContactsFragment();
+        ((ContactsFragment) mFragment).setActionModeListener(actionModeListener);
+        startFragmentTransaction(fragmentActivity, mFragment);
     }
 
     public void startQRScannerFragment(FragmentActivity fragmentActivity) {
         fragmentID = R.id.navigation_qr_scanner;
-        QRScannerFragment qrScannerFragment = new QRScannerFragment();
-        startFragmentTransaction(fragmentActivity, qrScannerFragment);
+        mFragment = new QRScannerFragment();
+        startFragmentTransaction(fragmentActivity, mFragment);
 
     }
 
     public void startQRCodeFragment(FragmentActivity fragmentActivity) {
         fragmentID = R.id.navigation_qr_code;
-        QRCodeFragment qrCodeFragment = new QRCodeFragment();
-        startFragmentTransaction(fragmentActivity, qrCodeFragment);
+        mFragment = new QRCodeFragment();
+        startFragmentTransaction(fragmentActivity, mFragment);
     }
 
     public void startSettingsFragment(FragmentActivity fragmentActivity) {
         fragmentID = R.id.navigation_settings;
-        SettingsFragment settingsFragment = new SettingsFragment();
-        startFragmentTransaction(fragmentActivity, settingsFragment);
+        mFragment = new SettingsFragment();
+        startFragmentTransaction(fragmentActivity, mFragment);
     }
 
     public void startSettingsFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
         fragmentID = R.id.navigation_settings;
-        SettingsFragment settingsFragment = new SettingsFragment();
-        startFragmentTransaction(fragmentActivity, settingsFragment, enterAnim, exitAnim);
+        mFragment = new SettingsFragment();
+        startFragmentTransaction(fragmentActivity, mFragment, enterAnim, exitAnim);
     }
 
     public void startContactInfoFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
-        ContactInfoFragment contactInfoFragment = new ContactInfoFragment();
-        startFragmentTransaction(fragmentActivity, contactInfoFragment, enterAnim, exitAnim);
+        mFragment = new ContactInfoFragment();
+        startFragmentTransaction(fragmentActivity, mFragment, enterAnim, exitAnim);
     }
 
     public void startBalanceFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
-        BalanceFragment balanceFragment = new BalanceFragment();
-        startFragmentTransaction(fragmentActivity, balanceFragment, enterAnim, exitAnim);
+        mFragment = new BalanceFragment();
+        startFragmentTransaction(fragmentActivity, mFragment, enterAnim, exitAnim);
     }
 
     public void startCompanyInfoFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
-        CompanyInfoFragment companyInfoFragment = new CompanyInfoFragment();
-        startFragmentTransaction(fragmentActivity, companyInfoFragment, enterAnim, exitAnim);
+        mFragment = new CompanyInfoFragment();
+        startFragmentTransaction(fragmentActivity, mFragment, enterAnim, exitAnim);
     }
 
     public void startContactInfoEditFragment(FragmentActivity fragmentActivity, int enterAnim, int exitAnim) {
-        ContactInfoEditFragment contactInfoEditFragment = new ContactInfoEditFragment();
-        startFragmentTransaction(fragmentActivity, contactInfoEditFragment, enterAnim, exitAnim);
+        mFragment = new ContactInfoEditFragment();
+        startFragmentTransaction(fragmentActivity, mFragment, enterAnim, exitAnim);
     }
 
     private void startFragmentTransaction(FragmentActivity fragmentActivity, Fragment fragment) {

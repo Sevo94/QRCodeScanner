@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,13 +20,18 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sevak1994.qrcodescanner.Constants;
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.fragments.ContactInfoEditFragment;
 import com.example.sevak1994.qrcodescanner.helper.BottomNavigationViewHelper;
 import com.example.sevak1994.qrcodescanner.interfaces.ActionModeListener;
 import com.example.sevak1994.qrcodescanner.interfaces.BackKeyListener;
 import com.example.sevak1994.qrcodescanner.interfaces.BottomNavigationItemSelect;
 
+import static com.example.sevak1994.qrcodescanner.Constants.MY_PERMISSIONS_REQUEST_CAMERA;
+import static com.example.sevak1994.qrcodescanner.Constants.REQUEST_READ_EXTERNAL_STORAGE;
+import static com.example.sevak1994.qrcodescanner.Constants.REQUEST_WRITE_EXTERNAL_STORAGE;
 import static com.example.sevak1994.qrcodescanner.R.id.navigation_home;
 
 public class HomeActivity extends AppCompatActivity implements ActionModeListener, BottomNavigationItemSelect {
@@ -44,7 +50,6 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
 
     private ActionModeListener actionModeListener = this;
 
-    private final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -97,17 +102,37 @@ public class HomeActivity extends AppCompatActivity implements ActionModeListene
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Fragment mFragment;
         switch (requestCode) {
-            case MY_PERMISSIONS_REQUEST_CAMERA: {
+            case MY_PERMISSIONS_REQUEST_CAMERA:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     fragmentManager.startQRScannerFragment(fragmentActivity);
                 } else {
-                    //TODO handle permission denial case
                     permissionDenied = true;
                     selectNavigationItem(FragmentManager.getInstance().getLastTransactionFragmentID());
                 }
                 break;
-            }
+            case REQUEST_READ_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mFragment = FragmentManager.getInstance().getmFragment();
+                    if (mFragment instanceof ContactInfoEditFragment) {
+                        ((ContactInfoEditFragment) mFragment).getPhotoFromGallery();
+                    }
+                } else {
+
+                }
+                break;
+            case REQUEST_WRITE_EXTERNAL_STORAGE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    mFragment = FragmentManager.getInstance().getmFragment();
+                    if (mFragment instanceof ContactInfoEditFragment) {
+                        ((ContactInfoEditFragment) mFragment).getPhotoFromCamera();
+                    }
+                } else {
+
+                }
+                break;
+
         }
     }
 

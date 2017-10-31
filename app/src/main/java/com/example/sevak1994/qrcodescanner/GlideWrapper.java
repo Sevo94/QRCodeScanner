@@ -21,7 +21,6 @@ public class GlideWrapper {
 
     public void loadImageWithGlide(Context context, String url) {
         if (context != null) {
-
             Glide.with(context)
                     .load(url)
                     .asBitmap()

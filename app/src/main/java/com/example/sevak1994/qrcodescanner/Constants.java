@@ -20,6 +20,11 @@ public class Constants {
 
     public static final String USER_LOGIN          = "user_login";
 
+    //PERMISSIONS
+    public static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
+    public static final int REQUEST_READ_EXTERNAL_STORAGE = 3;
+    public static final int REQUEST_WRITE_EXTERNAL_STORAGE = 4;
+
 
     //API END POINTS
     public static final String AUTHENTICATE_URL    = "http://18.194.74.98";

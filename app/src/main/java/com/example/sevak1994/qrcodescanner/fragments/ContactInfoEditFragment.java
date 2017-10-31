@@ -1,7 +1,9 @@
 package com.example.sevak1994.qrcodescanner.fragments;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,9 +11,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
@@ -47,6 +53,8 @@ import java.util.Date;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import static com.example.sevak1994.qrcodescanner.Constants.REQUEST_READ_EXTERNAL_STORAGE;
+import static com.example.sevak1994.qrcodescanner.Constants.REQUEST_WRITE_EXTERNAL_STORAGE;
 
 /**
  * Created by Sevak1994 on 9/17/2017.
@@ -107,12 +115,10 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
             public void onClick(DialogInterface dialogInterface, int position) {
                 switch (position) {
                     case FROM_GALLERY:
-                        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-                        intent.setType("image/*");
-                        startActivityForResult(intent, REQUEST_IMAGE_FROM_GALLERY);
+                        requestReadPermission();
                         break;
                     case FROM_CAMERA:
-                        takeAPictureFromCamera();
+                        requestWritePermission();
                         break;
                 }
             }
@@ -120,6 +126,41 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
 
         builder.show();
     }
+
+    public void getPhotoFromGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI);
+        intent.setType("image/*");
+        startActivityForResult(intent, REQUEST_IMAGE_FROM_GALLERY);
+    }
+
+    public void getPhotoFromCamera() {
+        takeAPictureFromCamera();
+    }
+
+    private void requestReadPermission() {
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_EXTERNAL_STORAGE);
+            }
+        } else {
+            getPhotoFromGallery();
+        }
+    }
+
+    private void requestWritePermission() {
+        if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+
+            } else {
+                ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_EXTERNAL_STORAGE);
+            }
+        } else {
+            getPhotoFromCamera();
+        }
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -199,7 +240,7 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
             try {
                 photoFile = createImageFile();
             } catch (IOException ex) {
-
+                Toast.makeText(getContext(), ex.toString(), Toast.LENGTH_SHORT).show();
             }
 
             if (photoFile != null) {
