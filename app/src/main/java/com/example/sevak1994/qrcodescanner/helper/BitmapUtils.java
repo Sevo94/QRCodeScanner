@@ -1,6 +1,9 @@
 package com.example.sevak1994.qrcodescanner.helper;
 
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.util.Log;
 
 /**
@@ -11,11 +14,13 @@ public class BitmapUtils {
 
     public static Bitmap fastblur(Bitmap sentBitmap, float scale, int radius) {
 
-        int width = Math.round(sentBitmap.getWidth() * scale);
-        int height = Math.round(sentBitmap.getHeight() * scale);
-        sentBitmap = Bitmap.createScaledBitmap(sentBitmap, width, height, false);
+//        int width = Math.round(sentBitmap.getWidth() * scale);
+//        int height = Math.round(sentBitmap.getHeight() * scale);
+//        sentBitmap = Bitmap.createScaledBitmap(sentBitmap, width, height, false);
+//
+//        Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
 
-        Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
+        Bitmap bitmap = BITMAP_RESIZER(sentBitmap, Math.round(sentBitmap.getWidth() * scale), Math.round(sentBitmap.getHeight() * scale));
 
         if (radius < 1) {
             return (null);
@@ -215,6 +220,25 @@ public class BitmapUtils {
         bitmap.setPixels(pix, 0, w, 0, 0, w, h);
 
         return (bitmap);
+    }
+
+    private static Bitmap BITMAP_RESIZER(Bitmap bitmap, int newWidth, int newHeight) {
+        Bitmap scaledBitmap = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
+
+        float ratioX = newWidth / (float) bitmap.getWidth();
+        float ratioY = newHeight / (float) bitmap.getHeight();
+        float middleX = newWidth / 2.0f;
+        float middleY = newHeight / 2.0f;
+
+        Matrix scaleMatrix = new Matrix();
+        scaleMatrix.setScale(ratioX, ratioY, middleX, middleY);
+
+        Canvas canvas = new Canvas(scaledBitmap);
+        canvas.setMatrix(scaleMatrix);
+        canvas.drawBitmap(bitmap, middleX - bitmap.getWidth() / 2, middleY - bitmap.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
+
+        return scaledBitmap;
+
     }
 
     public static Bitmap resizeBitmap(Bitmap bitmap, int maxSize) {

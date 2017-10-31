@@ -74,11 +74,10 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
                 final Handler handler = new Handler();
 
                 profileImage.setImageBitmap(resource);
-                //blurProfilePicture.setImageBitmap(resource);
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        final Bitmap bitmap = BitmapUtils.fastblur(resource, 0.2f, 5);
+                        final Bitmap bitmap = BitmapUtils.fastblur(resource, 0.2f, 4);    //5
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
