@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.SystemClock;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.signature.StringSignature;
 
@@ -26,7 +27,8 @@ public class GlideWrapper {
                     .asBitmap()
                     .dontAnimate()
                     .override(300, 200)
-                    .signature(new StringSignature(String.valueOf(SystemClock.currentThreadTimeMillis())))
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    //.signature(new StringSignature(String.valueOf(SystemClock.currentThreadTimeMillis())))
                     .placeholder(R.drawable.default_photo)
                     .into(simpleTarget);
 
