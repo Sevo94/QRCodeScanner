@@ -71,7 +71,7 @@ public class AuthenticateActivity extends AppCompatActivity {
 
                     String email = emailEditText.getText().toString();
                     String password = passwordEditText.getText().toString();
-                    String conformPassword = confirmPasswordEditText.getText().toString();
+                    String confirmPassword = confirmPasswordEditText.getText().toString();
 
                     if (email.isEmpty()) {
                         CommonHelper.shakeAnimation(emailTextLayout);
@@ -83,13 +83,13 @@ public class AuthenticateActivity extends AppCompatActivity {
                         return;
                     }
 
-                    if (conformPassword.isEmpty()) {
+                    if (confirmPassword.isEmpty()) {
                         CommonHelper.shakeAnimation(confirmPasswordTextLayout);
                         return;
                     }
 
 
-                    RestRepository.getInstance(BissApplication.getInstance()).UserSignUp(Constants.SIGN_UP, email, password, conformPassword, new HttpResponse.Listener<UserModelRoot>() {
+                    RestRepository.getInstance(BissApplication.getInstance()).UserSignUp(Constants.SIGN_UP, email, password, confirmPassword, new HttpResponse.Listener<UserModelRoot>() {
                                 @Override
                                 public void onResponse(UserModelRoot response, Map<String, String> headers) {
                                     signInClick();
