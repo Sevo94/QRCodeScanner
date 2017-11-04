@@ -33,7 +33,7 @@ public class RestRepository {
     }
 
     public void UserSignUp(String url, String email, String password, String confirmPassword,
-                           HttpResponse.Listener<Object> listener,
+                           HttpResponse.Listener<UserModelRoot> listener,
                            HttpResponse.ErrorListener errorListener) {
 
         Gson gson = new Gson();
@@ -42,7 +42,7 @@ public class RestRepository {
         jsonObject.addProperty("password", password);
         jsonObject.addProperty("confirmPassword", confirmPassword);
 
-        HttpPostRequest httpPostRequest = new HttpPostRequest(url, jsonObject.toString(), null, Object.class, gson, listener, errorListener);
+        HttpPostRequest httpPostRequest = new HttpPostRequest(url, jsonObject.toString(), null, UserModelRoot.class, gson, listener, errorListener);
 
         requestQueue.add(httpPostRequest);
     }

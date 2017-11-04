@@ -39,6 +39,7 @@ import com.example.sevak1994.qrcodescanner.AWSUtil;
 import com.example.sevak1994.qrcodescanner.Constants;
 import com.example.sevak1994.qrcodescanner.FragmentManager;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.UserInfo;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
 import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
@@ -257,7 +258,7 @@ public class ContactInfoEditFragment extends Fragment implements BackKeyListener
 
         observer = transferUtility.upload(
                 Constants.BUCKET_NAME,
-                Constants.UPLOAD_KEY,
+                UserInfo.getInstance().getUserID(),
                 file
         );
 

@@ -20,6 +20,8 @@ public class Constants {
 
     public static final String USER_LOGIN          = "user_login";
 
+    public static final String USER_ID             = "user_id";
+
     //PERMISSIONS
     public static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
     public static final int REQUEST_READ_EXTERNAL_STORAGE = 3;

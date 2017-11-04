@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener;
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver;
@@ -21,6 +22,7 @@ import com.example.sevak1994.qrcodescanner.AWSUtil;
 import com.example.sevak1994.qrcodescanner.Constants;
 import com.example.sevak1994.qrcodescanner.GlideWrapper;
 import com.example.sevak1994.qrcodescanner.R;
+import com.example.sevak1994.qrcodescanner.UserInfo;
 import com.example.sevak1994.qrcodescanner.activities.HomeActivity;
 import com.example.sevak1994.qrcodescanner.helper.BitmapUtils;
 import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
@@ -43,6 +45,8 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
     private CircleImageView companyLogo;
     private CircleImageView profileImage;
     private GlideWrapper glideWrapper;
+
+    private TextView emailTV;
 
     public HomeFragment() {
     }
@@ -100,6 +104,9 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
         blurProfilePicture = fragmentRootView.findViewById(R.id.blur_pro_pic);
         companyLogo = fragmentRootView.findViewById(R.id.company_logo);
         profileImage = fragmentRootView.findViewById(R.id.profile_image);
+        emailTV = fragmentRootView.findViewById(R.id.email_tv);
+
+        emailTV.setText(UserInfo.getInstance().getEmail());
 
         companyLogo.setColorFilter(getActivity().getResources().getColor(R.color.toolbar_text_color));
     }
@@ -110,7 +117,7 @@ public class HomeFragment extends Fragment implements BackKeyListener, TransferL
 
         TransferObserver observer = transferUtility.download(
                 Constants.BUCKET_NAME,
-                Constants.UPLOAD_KEY,
+                UserInfo.getInstance().getUserID(),
                 file
         );
 

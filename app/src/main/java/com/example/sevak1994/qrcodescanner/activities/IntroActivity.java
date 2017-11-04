@@ -10,6 +10,8 @@ import com.example.sevak1994.qrcodescanner.BissApplication;
 import com.example.sevak1994.qrcodescanner.R;
 import com.example.sevak1994.qrcodescanner.helper.SharedPreferenceHelper;
 
+import static com.example.sevak1994.qrcodescanner.Constants.USER_ID;
+
 
 public class IntroActivity extends AppCompatActivity {
 
@@ -21,7 +23,8 @@ public class IntroActivity extends AppCompatActivity {
         System.setProperty(SDKGlobalConfiguration.ENFORCE_S3_SIGV4_SYSTEM_PROPERTY, "true");
 
         //TODO change preference key
-        if (!SharedPreferenceHelper.loadStringFromPreference("signin").isEmpty()) {
+        if (!SharedPreferenceHelper.loadStringFromPreference(USER_ID).isEmpty()) {
+
             Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(intent);

@@ -98,17 +98,25 @@
 
             <Button
                 android:id="@+id/sign_up_btn"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign up"
-                android:textAllCaps="false" />
+                android:layout_margin="6dp"
+                android:background="@drawable/auth_btn_bg_shape_select"
+                android:text="@string/sign_up"
+                android:textAllCaps="false"
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/sign_in_btn"
+                style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign in"
-                android:textAllCaps="false" />
+                android:layout_margin="6dp"
+                android:background="@drawable/auth_btn_bg_shape_select"
+                android:text="@string/sign_in"
+                android:textAllCaps="false"
+                android:textColor="@color/black" />
         </LinearLayout>
 
     </LinearLayout>
